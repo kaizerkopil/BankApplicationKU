@@ -28,13 +28,14 @@ public static class ConfigureServicesExtensions
     {
         services.AddLogging(loggingBuilder =>
         {
-            loggingBuilder.AddSimpleConsole(consoleOptions =>
-            {
-                consoleOptions.SingleLine = true;
-                consoleOptions.IncludeScopes = false;
-                consoleOptions.TimestampFormat = "dd/MM/yyyy HH:mm:ss ";
-            });
-
+            // removed "SimpleConsole" logging provider from Microsoft since we are now solely configuring all logging configurations using Nlog
+            //loggingBuilder.AddSimpleConsole(consoleOptions =>
+            //{
+            //    consoleOptions.SingleLine = true;
+            //    consoleOptions.IncludeScopes = false;
+            //    consoleOptions.TimestampFormat = "dd/MM/yyyy HH:mm:ss ";
+            //});
+            loggingBuilder.ClearProviders();
             loggingBuilder.AddNLog("nlog.config");
         });
 
