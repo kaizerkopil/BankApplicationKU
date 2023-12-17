@@ -4,15 +4,16 @@
  * 
  */
 
-using BankingWebApp.Database;
-using BankingWebApp.Services;
+using NLog;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.AddBankAppServices();
-
+GlobalDiagnosticsContext.Set("configDir", "C:\\Users\\kopil\\OneDrive\\Documents\\KU_University_Documents\\SAPM_Final_Project\\BankingWebApp\\BankingWebApp");
+GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
 var app = builder.Build();
 
@@ -28,6 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
+app.UseHttpLogging();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -38,4 +40,25 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+try
+{
+    logger.Debug("init main");
+    app.Run();
+
+} catch (Exception exception)
+{
+    //NLog: catch setup errors
+    logger.Error(exception, "Stopped program because of exception");
+    throw;
+} finally
+{
+    // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+    NLog.LogManager.Shutdown();
+
+}
+
+
+

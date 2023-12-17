@@ -1,5 +1,4 @@
-﻿
-namespace BankingWebApp.Database;
+﻿namespace BankingWebApp.Extensions;
 
 public static class SeedDataExtension
 {

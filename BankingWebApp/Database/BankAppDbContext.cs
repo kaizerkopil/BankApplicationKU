@@ -1,4 +1,5 @@
-﻿using BankingWebApp.Models.Bank;
+﻿using BankingWebApp.Extensions;
+using BankingWebApp.Models.Bank;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankingWebApp.Database;
@@ -25,5 +26,4 @@ public class BankAppDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
-
 }
