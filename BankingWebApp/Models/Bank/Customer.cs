@@ -8,18 +8,22 @@ public class Customer
 
     [Display(Name = "First Name")]
     [Length(1, 25)]
+    [Required]
     public string? FirstName { get; set; }
 
     [Display(Name = "Last Name")]
     [Length(1, 25)]
+    [Required]
     public string? LastName { get; set; }
 
     [Display(Name = "Email")]
-    [Length(10, 40)]
+    [Required(ErrorMessage = "Email cannot be empty")]
+    [MaxLength(25, ErrorMessage = "Email cannot exceed 25 characters")]
     public string? EmailAddress { get; set; }
 
     [Display(Name = "Password")]
-    [Length(10, 40)]
+    [Required(ErrorMessage = "Password cannot be empty")]
+    [MaxLength(20, ErrorMessage = "Password cannot exceed 20 characters")]
     public string? Password { get; set; }
 
     [Display(Name = "Phone number")]
@@ -35,7 +39,7 @@ public class Customer
     public string? PostCode { get; set; }
 
     [Display(Name = "City")]
-    [Length(1, 15)]
+    [MinLength(1)]
     public string? City { get; set; }
 
     [Display(Name = "Date Registered")]
