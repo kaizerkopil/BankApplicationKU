@@ -18,6 +18,9 @@ public class HomeController : BaseController<HomeController>
 
     public IActionResult Index()
     {
+        //ViewData["Current"] = "Home";
+        ViewData.SetData("Current", "Home");
+
         _logger.LogTrace($"0 - Logging Trace level message");
         _logger.LogDebug($"1 - Logging Debug level message");
         _logger.LogInformation($"2 - Logging Information level message");
@@ -40,6 +43,10 @@ public class HomeController : BaseController<HomeController>
 
     public IActionResult Privacy()
     {
+
+        //ViewData["Current"] = "Privacy";
+        ViewData.SetData("Current", "Home");
+
         return View();
     }
 

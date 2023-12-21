@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    scroll-behavior: smooth;
 }
 
 @media (min-width: 768px) {
@@ -18,5 +19,35 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    min-height: 100vh;
+}
+
+#renderBody{
+
+}
+
+/**/
+
+#sideBarDiv {
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills > .nav-link {
+    color: #F0F8FF !important;
+    background-color: #CD0B0B;
+}
+
+.dropdown-toggle {
+    outline: 0;
+}
+
+.scrollarea {
+    overflow-y: auto;
+}
+
+.navbar a {
+    text-decoration: none;
 }

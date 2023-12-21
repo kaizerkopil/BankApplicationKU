@@ -8,7 +8,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 //#region Bootstrap Modal with Form style: Assigning ModelTitle and TextInput in the ModelDialog Header and Body to value being set on an element's attribute
 
-var exampleModal = document.getElementById('exampleModal')
+/* Causing Issues
+var exampleModal = document.getElementById('exampleModal');
 exampleModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
     var button = event.relatedTarget
@@ -24,6 +25,7 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
     modalTitle.textContent = 'New message to ' + recipient
     modalBodyInput.value = recipient
 })
+*/
 
 //#endregion
 
