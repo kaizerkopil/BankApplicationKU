@@ -22,6 +22,7 @@ public class HomeController : BaseController<HomeController>
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult LoginPage([Bind("Email, Password")] Customer cust)
     {
         var entriesToValidate = ModelState.Where(x => x.Key == "EmailAddress" || x.Key == "Password");

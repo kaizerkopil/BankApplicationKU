@@ -5,19 +5,24 @@
 }
 
 <div class="vw-100 vh-100 relative">
+    <div class="container position-relative mt-2 mx-auto">
+        <h4 class="align-self-end pt-1 col-sm-12 ps-4 text-center text-md-start fw-semibold ps-lg-5">The future is here with <span class="h2 fw-bolder">FastBank™</span></h4>
+        <h5 class="col-sm-12 ps-4 text-center text-md-start fw-light ps-lg-5">Banking has never been faster</h5>
+    </div>
     @using (Html.BeginForm("LoginPage", "Home",
     new { },
     FormMethod.Post,
     true,
     new { }))
     {
-        <div class="border border-1 border-opacity-25 border-black rounded-2 container row p-4 w-75 h-75 position-absolute top-50 start-50 translate-middle gap-0 g-0">
-            <div class="align-self-center mb-0">
-                <h1 class="fs-1 fw-light">Login Page</h1>
+        <div class="border border-1 border-opacity-25 border-black rounded-2 container row p-4 w-75 h-75 position-absolute top-50 start-50 translate-middle gap-0 g-0 mt-2">
+            <div class="align-self-center mb-0 row">
+                <div class="col-2 d-none d-lg-block"></div>
+                <h1 class="col-auto fs-1 fw-light ms-2">Login Page</h1>
                 <hr />
             </div>
 
-            <div class="container d-flex flex-column gap-2 align-items-center ">
+            <div class="container d-flex flex-column gap-2 align-items-center">
                 <div class="row input-group align-items-center py-2 gap-md-2">
                     <div class="col-12 col-lg-2 text-start text-lg-end my-auto">
                         @Html.LabelFor(m => m.EmailAddress)
@@ -45,12 +50,13 @@
 
             </div>
 
-            <div class="container row align-items-start mx-auto mt-3 gap-2">
-                <Button class="btn btn-primary ms-lg-auto col-2" type="submit">Login</Button>
-                <a class="btn btn-primary col-2">Cancel</a>
+            <div class="container row align-items-start mx-auto mt-3 gap-2 ms-3">
+                <div class="d-none d-lg-block col-lg-2"></div>
+                <Button class="btn btn-primary col-auto col-md-2" type="submit">Login</Button>
+                <a class="btn btn-primary col-auto col-md-2">Register</a>
             </div>
             <div class="d-flex justify-content-end bottom-0 start-0 position-absolute pe-1">
-                <p class="fst-italic fw-light fs-6 mb-1 bg-info-subtle rounded-pill p-1">© All rights reserved ® by <span class="fst-normal fw-semibold">Kopil Kaiser</span> ™</p>
+                <p class="fst-italic fw-light small mb-1 bg-info-subtle rounded-pill p-1">© All rights reserved ® by <span class="fst-normal fw-semibold">Kopil Kaiser</span> ™</p>
                 @*
                     TM - Alt + 0153
                     CopyRight(C) - Alt + 0169
