@@ -28,7 +28,7 @@
                         @Html.LabelFor(m => m.EmailAddress)
                     </div>
                     <div class="col-md-8 col-lg-6">
-                        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", @type = "email" })
                     </div>
                     <div class="row ps-md-0 ps-lg-3">
                         <div class="col-2 d-none d-lg-block"></div>
@@ -40,14 +40,19 @@
                         @Html.LabelFor(m => m.Password)
                     </div>
                     <div class="col-md-8 col-lg-6">
-                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type="password" })
                     </div>
                     <div class="row ps-md-0 ps-lg-3">
                         <div class="col-2 d-none d-lg-block"></div>
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "col-lg-6 fst-italic", @style = "color:crimson;" })
                     </div>
                 </div>
-
+               <div class="container-sm mx-auto row align-self-start ps-0">
+                    <div class="d-none d-lg-block col-2 bg-black"></div>
+                    @if(ViewData["UserNotFound"] != null){
+                        <div class="col-auto"><p>@(ViewData["UserNotFound"] as string)</p></div>
+                    }
+                </div>
             </div>
 
             <div class="container row align-items-start mx-auto mt-3 gap-2 ms-3">

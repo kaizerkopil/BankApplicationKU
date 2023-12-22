@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingWebApp.Migrations
 {
     [DbContext(typeof(BankAppDbContext))]
-    [Migration("20231216132336_changing_Transaction_ColumnOrder")]
-    partial class changing_Transaction_ColumnOrder
+    [Migration("20231222155335_SettingUp_FastBankApp_Database")]
+    partial class SettingUp_FastBankApp_Database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,13 +79,22 @@ namespace BankingWebApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Phonenum")
                         .HasColumnType("nvarchar(max)");
@@ -107,6 +116,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "john.gerrad@gmail.com",
                             FirstName = "John",
                             LastName = "Gerrad",
+                            Password = "1234",
                             Phonenum = "07705089501"
                         },
                         new
@@ -115,6 +125,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "pattrick.george@outlook.com",
                             FirstName = "Pattrick",
                             LastName = "George",
+                            Password = "5678",
                             Phonenum = "07755589511"
                         },
                         new
@@ -123,6 +134,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "lilliana.bestie@hotmail.com",
                             FirstName = "Lilliana",
                             LastName = "Johnson",
+                            Password = "9101112",
                             Phonenum = "07712312355"
                         });
                 });

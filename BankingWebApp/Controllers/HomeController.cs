@@ -8,8 +8,8 @@ namespace BankingWebApp.Controllers;
 
 public class HomeController : BaseController<HomeController>
 {
-    private TransactionRepository _repo;
-    public HomeController(ILogger<HomeController> logger, TransactionRepository repo) : base(logger)
+    private CustomerRepository _repo;
+    public HomeController(ILogger<HomeController> logger, CustomerRepository repo) : base(logger)
     {
         _repo = repo;
     }
@@ -23,7 +23,7 @@ public class HomeController : BaseController<HomeController>
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult LoginPage([Bind("Email, Password")] Customer cust)
+    public IActionResult LoginPage([Bind("EmailAddress, Password")] Customer cust)
     {
         var entriesToValidate = ModelState.Where(x => x.Key == "EmailAddress" || x.Key == "Password");
         var excludeEntries = ModelState.Except(entriesToValidate).ToList();
@@ -32,7 +32,15 @@ public class HomeController : BaseController<HomeController>
 
         if (!ModelState.IsValid) return View(cust);
 
-        return RedirectToAction("Index", "Home", new { id = cust.CustomerId });
+        try
+        {
+            var custDb = _repo.GetCustomerByEmail(cust.EmailAddress!);
+            return RedirectToAction("Index", "Home", new { id = custDb.CustomerId });
+        } catch (Exception)
+        {
+            ViewData["UserNotFound"] = "No User has been registed with the following Email address";
+            return View();
+        }
     }
     #endregion
 
