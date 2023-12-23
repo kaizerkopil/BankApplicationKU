@@ -4,6 +4,7 @@ using BankingWebApp.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingWebApp.Migrations
 {
     [DbContext(typeof(BankAppDbContext))]
-    partial class BankAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231223145158_decrease_Customer_EmailAddress_MaxLength")]
+    partial class decrease_Customer_EmailAddress_MaxLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

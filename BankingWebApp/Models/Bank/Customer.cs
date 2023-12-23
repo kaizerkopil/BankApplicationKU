@@ -16,7 +16,7 @@ public class Customer
 
     [Display(Name = "Email")]
     [Required(ErrorMessage = "Email cannot be empty")]
-    [MaxLength(100, ErrorMessage = "Email cannot exceed 25 characters")]
+    [MaxLength(50, ErrorMessage = "Email cannot exceed 25 characters")]
     public string? EmailAddress { get; set; }
 
     [Display(Name = "Password")]

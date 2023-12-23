@@ -38,7 +38,7 @@ public class HomeController : BaseController<HomeController>
             return RedirectToAction("Index", "Home", new { id = custDb.CustomerId });
         } catch (Exception)
         {
-            ViewData["UserNotFound"] = "No User has been registed with the following Email address";
+            ViewData["UserNotFound"] = "No user found with the following Email and Password";
             return View();
         }
     }
@@ -50,8 +50,8 @@ public class HomeController : BaseController<HomeController>
         //ViewData["Current"] = "Home";
         //setting link of navbar item to current page
         ViewData.SetData("ActiveLink", "Home");
-
-        var transactions = _repo.GetAll();
+        var custDb = _repo.GetById(1);
+        ViewData["CustomerFullName"] = custDb.FullName;
         //this will only show the Login Page
         return View();
     }
