@@ -1,4 +1,4 @@
-
+using BankingWebApp.Apis;
 using BankingWebApp.Base;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -9,6 +9,7 @@ namespace BankingWebApp.Controllers;
 public class HomeController : BaseController<HomeController>
 {
     private CustomerRepository _repo;
+
     public HomeController(ILogger<HomeController> logger, CustomerRepository repo) : base(logger)
     {
         _repo = repo;
@@ -45,13 +46,17 @@ public class HomeController : BaseController<HomeController>
     #endregion
 
     [HttpGet]
-    public IActionResult Index(int id)
+    public async Task<IActionResult> Index(int id)
     {
         //ViewData["Current"] = "Home";
         //setting link of navbar item to current page
         ViewData.SetData("ActiveLink", "Home");
         var custDb = _repo.GetById(1);
+
         ViewData["CustomerFullName"] = custDb.FullName;
+
+
+
         //this will only show the Login Page
         return View();
     }

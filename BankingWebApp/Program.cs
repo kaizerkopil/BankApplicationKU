@@ -9,9 +9,11 @@ using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
 builder.AddBankAppServices();
+
 GlobalDiagnosticsContext.Set("configDir", "C:\\Users\\kopil\\OneDrive\\Documents\\KU_University_Documents\\SAPM_Final_Project\\BankingWebApp\\BankingWebApp");
 GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
@@ -38,7 +40,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=LoginPage}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();

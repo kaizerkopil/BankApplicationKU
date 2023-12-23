@@ -13,15 +13,17 @@ public class AccountController : BaseController<AccountController>
         _repo = repo;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
-        _logger.LogCritical($"{this.GetType()} {nameof(Index)} page ran");
-        _repo.Insert(new Account());
-        var accounts = _repo.GetAll();
         return View();
     }
 
-
+    [HttpGet]
+    public IActionResult Index(Account acc)
+    {
+        return View();
+    }
 
     #region Showcasing Insertion of Related Data (Data between relational tables)
     //public IActionResult UserAccountDisabled()

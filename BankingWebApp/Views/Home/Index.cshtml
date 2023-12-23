@@ -1,9 +1,42 @@
-﻿@{
+﻿@model GoogleApi.Entities.Maps.Geocoding.GeocodeResponse
+@{   
     ViewData["Title"] = "Home Page";
 }
 
-@Html.ActionLink("Register Customer", "RegisterCustomer", "Customer", new{ floatVal = 99.99, intVal = 90, FirstName = "johnny66", LastName = "pattrick99", Phonenum = "555444", Password = "GregsPassword"}, new {@class="btn btn-primary"})
+
+
+
+<div class="container">
+    @Html.ActionLink("Register Customer", "RegisterCustomer", "Customer", new { floatVal = 99.99, intVal = 90, FirstName = "johnny66", LastName = "pattrick99", Phonenum = "555444", Password = "GregsPassword" }, new { @class = "btn btn-primary" })
+    <h1>Google Maps Examples</h1>
+    <div id="map" style="height: 400px; width: 50%;">
+        
+    </div>
+</div>
 
 @section Scripts{
+    <!-- Include the Google Maps JavaScript API -->
 
+
+    <script>
+        function initMap() {
+            // Specify the coordinates to center the map
+            var myLatLng = { lat: 51.416870510538665, lng: -0.216452804468379 };
+
+            // Create a new map object
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                zoom: 15 // Set the initial zoom level
+            });
+
+            // Create a marker and set its position
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: 'Hello World!'
+            });
+        }
+
+        initMap();
+    </script>
 }

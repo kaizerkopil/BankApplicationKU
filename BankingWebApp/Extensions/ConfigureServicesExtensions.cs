@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.HttpLogging;
+﻿using BankingWebApp.Apis;
+using GoogleApi.Extensions;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.Extensions.Options;
 using NLog.Web;
 
 namespace BankingWebApp.Extensions;
@@ -8,11 +11,12 @@ public static class ConfigureServicesExtensions
     public static IServiceCollection AddBankAppServices(this IHostApplicationBuilder builder)
     {
         var services = builder.Services;
-
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString") ?? Environment.GetEnvironmentVariable("DefaultConnectionString");
+        //var password = builder.Configuration.GetValue<string>("COLLEAGUE_CASTLE_EMAIL_PASSWORD") ?? Environment.GetEnvironmentVariable("COLLEAGUE_CASTLE_EMAIL_PASSWORD");
+        services.AddDbContext<BankAppDbContext>(options => options.UseSqlServer(connectionString));
         services.ConfigureBankAppLogging();
-        services.AddDbContext<BankAppDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")
-        ));
+
+
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         //services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -20,6 +24,16 @@ public static class ConfigureServicesExtensions
         services.AddScoped<CustomerRepository>();
         services.AddScoped<AccountRepository>();
         services.AddScoped<TransactionRepository>();
+
+        services.AddGoogleApiClients();
+
+        // Bind the GoogleApiSettings section from appsettings.json
+        services.Configure<GoogleApiSettings>(builder.Configuration.GetSection("GoogleApiSettings"));
+        // Access GoogleApiSettings via dependency injection
+        services.AddSingleton(provider =>
+            provider.GetRequiredService<IOptions<GoogleApiSettings>>().Value);
+
+        services.AddScoped<GoogleApiClient>();
 
         return services;
     }
