@@ -19,7 +19,7 @@ public class AccountController : BaseController<AccountController>
         return View();
     }
 
-    [HttpGet]
+    [HttpPost]
     public IActionResult Index(Account acc)
     {
         return View();

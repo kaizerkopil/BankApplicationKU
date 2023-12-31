@@ -43,7 +43,7 @@ public class Customer
 
     [NotMapped]
     [Compare(nameof(Password))]
-    public string ConfirmPassword { get; set; }
+    public string? ConfirmPassword { get; set; }
 
     [NotMapped]
     public string FullName { get => $"{FirstName} {LastName}"; }

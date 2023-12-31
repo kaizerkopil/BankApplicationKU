@@ -51,3 +51,10 @@ body {
 .navbar a {
     text-decoration: none;
 }
+
+/* This is to make the input focus in form-floating align correcting with the label*/
+
+.form-floating > .form-control, .form-floating > .form-control-plaintext {
+    padding: 1rem 1.35rem;
+}
+

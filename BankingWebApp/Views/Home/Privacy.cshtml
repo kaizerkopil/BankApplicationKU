@@ -2,6 +2,18 @@
     ViewData["Title"] = "Privacy Policy";
     Layout = "_Layout";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+<div class="container row mx-auto pt-3">
+    <h1 class="border border-2 rounded-2 py-2 col-12 col-lg-8 col-xl-6">@ViewData["Title"]<i class="fas fa-search ms-2"></i></h1>
+    <p>Use this page to detail your site's privacy policy.</p>
+
+    <div class="row">
+        <div class="col bg-warning-subtle">A</div>
+        <div class="col bg-success-subtle">B</div>
+    </div>
+    
+</div>
+
+@section Scripts {
+}
