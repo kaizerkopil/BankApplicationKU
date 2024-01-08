@@ -18,6 +18,8 @@ public class HomeController : BaseController<HomeController>
     [HttpGet]
     public IActionResult LoginPage()
     {
+        _logger.LogInformation("User has visited the loging page");
+
         return View();
     }
 
@@ -50,9 +52,9 @@ public class HomeController : BaseController<HomeController>
         //ViewData["Current"] = "Home";
         //setting link of navbar item to current page
         ViewData.SetData("ActiveLink", "Home");
-        var custDb = _repo.GetById(1);
+        var custDb = _repo.GetById(id);
         ViewData["CustomerFullName"] = custDb.FullName;
-
+        _logger.LogInformation("User has successfully logged in");
         //this will only show the Login Page
         return View();
     }

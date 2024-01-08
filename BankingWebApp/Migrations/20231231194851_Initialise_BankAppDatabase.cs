@@ -7,7 +7,7 @@
 namespace BankingWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class SettingUp_FastBankApp_Database : Migration
+    public partial class Initialise_BankAppDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace BankingWebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Phonenum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),

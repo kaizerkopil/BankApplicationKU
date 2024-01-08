@@ -19,6 +19,7 @@ GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnec
 
 var app = builder.Build();
 
+//Seeding Initial dummy data into the Database using the Dependency Injection container
 //using (var scope = app.Services.CreateScope())
 //{
 //    var serviceScope = scope.ServiceProvider;

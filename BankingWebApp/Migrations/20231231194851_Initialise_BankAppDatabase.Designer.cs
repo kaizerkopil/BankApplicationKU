@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingWebApp.Migrations
 {
     [DbContext(typeof(BankAppDbContext))]
-    [Migration("20231222155335_SettingUp_FastBankApp_Database")]
-    partial class SettingUp_FastBankApp_Database
+    [Migration("20231231194851_Initialise_BankAppDatabase")]
+    partial class Initialise_BankAppDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,8 +80,8 @@ namespace BankingWebApp.Migrations
 
                     b.Property<string>("EmailAddress")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
