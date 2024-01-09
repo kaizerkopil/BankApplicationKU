@@ -29,6 +29,8 @@ Technologies used:
   	=> AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1
 
  	=> Boostrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1
+
+   	=> Font Awesome 6.5.1. Ref Link: https://fontawesome.com/download
  	
    	=> JQuery 3.7.1
 
