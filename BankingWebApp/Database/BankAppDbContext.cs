@@ -1,6 +1,7 @@
 ﻿using BankingWebApp.Extensions;
 using BankingWebApp.Models.Bank;
 using Microsoft.EntityFrameworkCore;
+using static BankingWebApp.Models.Bank.Account;
 
 namespace BankingWebApp.Database;
 
@@ -18,6 +19,15 @@ public class BankAppDbContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        //Converting Enum values from respective int values to their string representations
+        //modelBuilder
+        //    .Entity<Account>()
+        //    .Property(e => e.AccountType)
+        //    .HasConversion(
+        //        v => v.ToString(),
+        //        v => Enum.Parse<AccountTypeEnum>(v)
+        //    );
 
         modelBuilder.SeedDataUsingModelBuilder();
         base.OnModelCreating(modelBuilder);

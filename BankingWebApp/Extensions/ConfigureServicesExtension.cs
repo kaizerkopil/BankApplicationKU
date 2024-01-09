@@ -5,7 +5,7 @@ using NLog.Web;
 
 namespace BankingWebApp.Extensions;
 
-public static class ConfigureServicesExtensions
+public static class ConfigureServicesExtension
 {
     public static IServiceCollection AddBankAppServices(this IHostApplicationBuilder builder)
     {
@@ -17,7 +17,7 @@ public static class ConfigureServicesExtensions
         services.AddDbContext<BankAppDbContext>(options => options.UseSqlServer(connectionString));
 
         //Register Logging and Services
-        services.ConfigureBankAppLogging();
+        services.ConfigureBankAppLogging(builder.Configuration.GetValue<bool>("EnableHttpLogging"));
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         //Register Repositories
@@ -33,13 +33,20 @@ public static class ConfigureServicesExtensions
         // Step 2: Access them via Dependency Injection
         //services.Configure<GoogleApiSettings>(builder.Configuration.GetRequiredSection("GoogleApiSettings")); // Step:1
         //services.AddSingleton<GoogleApiSettings>(provider => provider.GetRequiredService<IOptions<GoogleApiSettings>>().Value); // Step:2
+
         services.Configure<CustomApiSettings>(builder.Configuration.GetRequiredSection("CustomApi")); //step 1
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<CustomApiSettings>>().Value);
+
+        services.Configure<CustomerDetailsSetting>(builder.Configuration.GetRequiredSection("CustomerDetails"));
+        services.AddSingleton(sp => sp.GetRequiredService<IOptions<CustomerDetailsSetting>>().Value);
+
+        services.Configure<CurrentUser>(builder.Configuration.GetRequiredSection("CurrentUser"));
+        services.AddSingleton(sp => sp.GetRequiredService<IOptions<CurrentUser>>().Value);
 
         return services;
     }
 
-    public static IServiceCollection ConfigureBankAppLogging(this IServiceCollection services)
+    public static IServiceCollection ConfigureBankAppLogging(this IServiceCollection services, bool enableHttpLogging)
     {
         services.AddLogging(loggingBuilder =>
         {
@@ -54,16 +61,19 @@ public static class ConfigureServicesExtensions
             loggingBuilder.AddNLog("nlog.config");
         });
 
-        services.AddHttpLogging(logging =>
+        if (enableHttpLogging)
         {
-            logging.LoggingFields = HttpLoggingFields.All;
-            logging.RequestHeaders.Add("sec-ch-ua");
-            logging.ResponseHeaders.Add("MyResponseHeader");
-            logging.MediaTypeOptions.AddText("application/javascript");
-            logging.RequestBodyLogLimit = 4096;
-            logging.ResponseBodyLogLimit = 4096;
-            logging.CombineLogs = true;
-        });
+            services.AddHttpLogging(logging =>
+            {
+                logging.LoggingFields = HttpLoggingFields.All;
+                logging.RequestHeaders.Add("sec-ch-ua");
+                logging.ResponseHeaders.Add("MyResponseHeader");
+                logging.MediaTypeOptions.AddText("application/javascript");
+                logging.RequestBodyLogLimit = 4096;
+                logging.ResponseBodyLogLimit = 4096;
+                logging.CombineLogs = true;
+            });
+        }
 
         return services;
     }

@@ -1,8 +1,91 @@
-﻿@*
+﻿@model AccountViewModel
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
-   
+    var itemList = new SelectList(new string[]{ "Savings", "Debit" });
+}
+@using(Html.BeginForm("Index", "Account", FormMethod.Post)){
+    <div class="container-fluid">
+        <div class="container w-50 mt-lg-5 pt-lg-3 mt-3 mb-lg-3 mb-4 d-flex flex-column gap-2 align-items-center align-items-lg-start ms-lg-2 ps-0">
+            <p class="mb-0"> Please select an account:</p>
+            @Html.DropDownList("accountSelected", @Model.AccountTypes, new { @class = "form-select" })
+            <input type="hidden" value=""/>
+            <button class="btn btn-success w-25 mt-2" type="submit">Select</button>
+        </div>
+    </div>
+}
+@if(@Model.SelectedAccount != null){
+    <div class="container-fluid pt-2">
+        <div class="container border border-1 border-black rounded-2 py-2 ps-3 w-50 ms-lg-2 w-50">
+            <span class="mb-0 fs-6 fw-light">Account Details</span>
+            <hr class="mt-1 mb-2">
+            <div><span class="fs-6 fw-light">Account No:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountNo</span></div>
+            <div><span class="fs-6 fw-light">Account Holder:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Customer!.FullName</span></div>
+            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Balance</span></div>
+            <div><span class="fs-6 fw-light">Account Type:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountType</span></div>
+        </div>
+        <div class="container py-2 ps-0 mb-3 w-50 ms-lg-2 w-100">
+            <hr class="mb-2 mt-4" />
+            <h3 class="fw-light ps-2">List of Transactions:</h3>
+            <hr class="mt-2"/>
+            @if(Model.Transactions != null && Model.Transactions.Count != 0)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(m => m.Transactions[0].TransactionDate)</th>
+                            <th>@Html.DisplayNameFor(m => m.Transactions[0].Amount)</th>
+                            <th>@Html.DisplayName("Received From")</th>
+                            <th>@Html.DisplayName("Sent To")</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var transaction in Model.Transactions)
+                        {
+                            <tr>
+                                <td>@transaction.TransactionDate</td>
+                                @if (transaction.Sender?.AccountId == Model.SelectedAccount.AccountId)
+                                {
+                                    <td>-@transaction.Amount</td>
+                                    <td></td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <span>@transaction.Receiver?.Customer!.FullName</span>
+                                            <div><span class="fw-bold pe-1">A/C no:</span><span>@transaction.Receiver?.AccountNo</span></div>
+                                        </div>
+                                    </td>
+                                } else if (transaction.Receiver.AccountId == Model.SelectedAccount.AccountId)
+                                {
+                                    <td>+@transaction.Amount</td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <span>@transaction.Sender?.Customer!.FullName</span>
+                                            <div><span class="fw-bold pe-1">A/C no:</span><span>@transaction.Sender?.AccountNo</span></div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>     
+            }
+        </div>
+    </div>
+} else
+{
+    <div class="container text-center text-lg-start my-auto ms-lg-0 ps-lg-4">
+        <div>
+        <span class="fs-5"><i class="bi bi-info-circle-fill me-2"></i>First select one of your available Account</span>
+        </div>
+        <div>
+            <span class="fs-5"><i class="bi bi-info-circle-fill me-2"></i>Then Click on "Select"</span>
+        </div>
+    </div>
 }
 
-<h3>Account Index Page</h3>
+

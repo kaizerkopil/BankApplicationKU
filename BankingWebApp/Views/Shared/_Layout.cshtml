@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BankingWebApp</title>
+    <title>@ViewData["Title"] - FastBank</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
@@ -11,7 +13,7 @@
     <link rel="stylesheet" href="~/BankingWebApp.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="d-flex flex-lg-row flex-column flex-nowrap" id="sideBarDiv">
+    <div class="d-flex flex-column flex-nowrap">
         <h1 class="visually-hidden">Sidebars examples</h1>
         <div class="b-example-divider b-example-vr"></div>
 
@@ -45,7 +47,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#infoContainer" class="nav-link">
+                            <a class="nav-link @(ViewData["ActiveLink"] as string == "ShowTransactions" ? "active" : "")" asp-controller="Account" asp-action="Index" asp-route-id="@ViewData["CustomerId"]">
                                 Show Transactions
                             </a>
                         </li>
@@ -91,7 +93,7 @@
         <!-- #endregion Navigation Bar -->
 
         <!-- #region SideBar -->
-        <div class="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 300px;">
+        <div class="d-none d-lg-flex flex-column p-3 bg-body-tertiary position-fixed" style="width:300px;" id="sideBarDiv">
             <!-- #region SideBar Header -->
             <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 <i class="bi bi-bank me-2 fs-3"></i>
@@ -108,17 +110,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#secondaryContainer" class="nav-link link-body-emphasis">
+                    <a href="#" class="nav-link link-body-emphasis">
                         My Accounts
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#primaryContainer" class="nav-link link-body-emphasis">
+                    <a href="#" class="nav-link link-body-emphasis">
                         Transfer Money
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#infoContainer" class="nav-link link-body-emphasis">
+                    <a class="nav-link @(ViewData["ActiveLink"] as string == "ShowTransactions" ? "active" : "") link-body-emphasis" asp-controller="Account" asp-action="Index" asp-route-id="@ViewData["CustomerId"]">
                         Show Transactions
                     </a>
                 </li>
@@ -149,7 +151,7 @@
         </div>
         <!--#endregion SideBar -->
         <!-- #region Content -->
-        <div class="vh-100 vw-100" id="renderBody">
+        <div class="vh-100" id="renderBody">
             @* <div class="w-100 h-50 bg-success" id="successContainer"></div>
             <div class="w-100 h-50 bg-danger" id="dangerContainer"></div>
             <div class="w-100 h-50 bg-secondary" id="secondaryContainer"></div>
@@ -171,7 +173,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6cXabtfKwecTygwI0vBFn4pffiwit9Xc&callback=initMap" async defer></script>
+   @*  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnZK9pscNEOOb7a2c39KW1ueoZflHqSfk&callback=initMap" async defer></script> *@
+   <script src="~/js/loadGoogleMap.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -12,7 +12,7 @@ public class Transaction
     public decimal Amount { get; set; }
 
     [Display(Name = "Transaction Date")]
-    public DateTime TransactionDate { get => DateTime.Now; }
+    public DateTime TransactionDate { get; set; }
 
     [ForeignKey(nameof(Sender)), Column(Order = 1)]
     public int? SenderAccountId { get; set; }
@@ -23,9 +23,6 @@ public class Transaction
     public Account? Sender { get; set; }
 
     public Account? Receiver { get; set; }
-
-    [NotMapped]
-    public TransactionTypeEnum TransactionType { get; set; }
 
     public Transaction()
     {
@@ -39,11 +36,12 @@ public class Transaction
         Amount = amount;
     }
 
-    public Transaction(int transactionId, int senderAccountId, int receiverAccountId, decimal amount)
+    public Transaction(int transactionId, int senderAccountId, int receiverAccountId, decimal amount, DateTime transactionDate)
     {
         TransactionId = transactionId;
         Amount = amount;
         SenderAccountId = senderAccountId;
         ReceiverAccountId = receiverAccountId;
+        TransactionDate = transactionDate;
     }
 }

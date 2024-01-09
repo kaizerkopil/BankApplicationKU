@@ -1,6 +1,8 @@
 using BankingWebApp.Base;
+using BankingWebApp.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace BankingWebApp.Controllers;
@@ -8,9 +10,10 @@ namespace BankingWebApp.Controllers;
 public class HomeController : BaseController<HomeController>
 {
     private CustomerRepository _repo;
-
-    public HomeController(ILogger<HomeController> logger, CustomerRepository repo) : base(logger)
+    private IOptions<CurrentUser> _user;
+    public HomeController(ILogger<HomeController> logger, CustomerRepository repo, IOptions<CurrentUser> user) : base(logger)
     {
+        _user = user;
         _repo = repo;
     }
 
@@ -36,7 +39,7 @@ public class HomeController : BaseController<HomeController>
 
         try
         {
-            var custDb = _repo.GetCustomerByEmail(cust.EmailAddress!);
+            var custDb = _repo.GetCustomerByEmailAndPassword(cust.EmailAddress!, cust.Password!);
             return RedirectToAction("Index", "Home", new { id = custDb.CustomerId });
         } catch (Exception)
         {
@@ -49,11 +52,16 @@ public class HomeController : BaseController<HomeController>
     [HttpGet]
     public IActionResult Index(int id)
     {
+        if (id != 0) _user.Value.Id = id;
+
         //ViewData["Current"] = "Home";
         //setting link of navbar item to current page
         ViewData.SetData("ActiveLink", "Home");
-        var custDb = _repo.GetById(id);
+
+        var custDb = _repo.GetById(_user.Value.Id);
+        _user.Value.FullName = custDb.FullName;
         ViewData["CustomerFullName"] = custDb.FullName;
+        ViewData["CustomerId"] = _user.Value.Id;
         _logger.LogInformation("User has successfully logged in");
         //this will only show the Login Page
         return View();

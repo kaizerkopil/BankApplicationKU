@@ -10,11 +10,11 @@ namespace BankingWebApp.Database.Repositories
         {
         }
 
-        public Customer GetCustomerByEmail(string email)
+        public Customer GetCustomerByEmailAndPassword(string email, string password)
         {
-            var cust = GetAll().FirstOrDefault(c => c.EmailAddress == email);
+            var cust = GetAll().FirstOrDefault(c => c.EmailAddress == email && c.Password == password);
 
-            if (cust == null) throw new InvalidOperationException($"Customer with email {email} not found in database");
+            if (cust == null) throw new InvalidOperationException($"Customer with email: {email} or password: {password} not found in database");
 
             return cust;
         }

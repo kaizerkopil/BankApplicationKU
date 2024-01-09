@@ -2,7 +2,7 @@
 
 namespace BankingWebApp.Extensions
 {
-    public static class UtilitiesExtensions
+    public static class UtilitiesExtension
     {
         public static void SetData(this ViewDataDictionary dict, string key, object value)
         {

@@ -2,7 +2,7 @@
 {
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private readonly BankAppDbContext _context;
+        protected readonly BankAppDbContext _context;
         private readonly DbSet<TEntity> table;
 
         public BaseRepository(BankAppDbContext context)

@@ -32,7 +32,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
-app.UseHttpLogging();
+if (app.Configuration.GetValue<bool>("EnableHttpLogging"))
+{
+    app.UseHttpLogging();
+}
+
 app.UseStaticFiles();
 
 app.UseRouting();

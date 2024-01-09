@@ -4,6 +4,7 @@ using BankingWebApp.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingWebApp.Migrations
 {
     [DbContext(typeof(BankAppDbContext))]
-    partial class BankAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240109012844_Added_AccountType_To_Class_Account")]
+    partial class Added_AccountType_To_Class_Account
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,28 +55,21 @@ namespace BankingWebApp.Migrations
                         {
                             AccountId = 1,
                             AccountType = "Savings",
-                            Balance = 66000.00m,
-                            CustomerId = 1
-                        },
-                        new
-                        {
-                            AccountId = 4,
-                            AccountType = "Debit",
-                            Balance = 25500.00m,
+                            Balance = 52000.00m,
                             CustomerId = 1
                         },
                         new
                         {
                             AccountId = 2,
                             AccountType = "Debit",
-                            Balance = 89500.00m,
+                            Balance = 91000.00m,
                             CustomerId = 2
                         },
                         new
                         {
                             AccountId = 3,
                             AccountType = "Debit",
-                            Balance = 144000.00m,
+                            Balance = 157000.00m,
                             CustomerId = 3
                         });
                 });
@@ -127,7 +123,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "john.gerrad@gmail.com",
                             FirstName = "John",
                             LastName = "Gerrad",
-                            Password = "1111",
+                            Password = "1234",
                             Phonenum = "07705089501"
                         },
                         new
@@ -136,7 +132,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "pattrick.george@outlook.com",
                             FirstName = "Pattrick",
                             LastName = "George",
-                            Password = "2222",
+                            Password = "5678",
                             Phonenum = "07755589511"
                         },
                         new
@@ -145,7 +141,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "lilliana.bestie@hotmail.com",
                             FirstName = "Lilliana",
                             LastName = "Johnson",
-                            Password = "3333",
+                            Password = "9101112",
                             Phonenum = "07712312355"
                         });
                 });
@@ -171,9 +167,6 @@ namespace BankingWebApp.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("TransactionId");
 
                     b.HasIndex("ReceiverAccountId");
@@ -188,104 +181,49 @@ namespace BankingWebApp.Migrations
                             TransactionId = 1,
                             Amount = 1000m,
                             ReceiverAccountId = 2,
-                            SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(734)
+                            SenderAccountId = 1
                         },
                         new
                         {
                             TransactionId = 2,
                             Amount = 3000m,
                             ReceiverAccountId = 2,
-                            SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(811)
+                            SenderAccountId = 1
                         },
                         new
                         {
                             TransactionId = 3,
                             Amount = 5000m,
                             ReceiverAccountId = 3,
-                            SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(814)
-                        },
-                        new
-                        {
-                            TransactionId = 13,
-                            Amount = 6000m,
-                            ReceiverAccountId = 4,
-                            SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(816)
-                        },
-                        new
-                        {
-                            TransactionId = 8,
-                            Amount = 2000m,
-                            ReceiverAccountId = 3,
-                            SenderAccountId = 4,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(818)
-                        },
-                        new
-                        {
-                            TransactionId = 9,
-                            Amount = 1500m,
-                            ReceiverAccountId = 2,
-                            SenderAccountId = 4,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(820)
-                        },
-                        new
-                        {
-                            TransactionId = 10,
-                            Amount = 5000m,
-                            ReceiverAccountId = 1,
-                            SenderAccountId = 4,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(822)
+                            SenderAccountId = 1
                         },
                         new
                         {
                             TransactionId = 4,
                             Amount = 6000m,
                             ReceiverAccountId = 1,
-                            SenderAccountId = 2,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(824)
+                            SenderAccountId = 2
                         },
                         new
                         {
                             TransactionId = 5,
                             Amount = 15000m,
                             ReceiverAccountId = 3,
-                            SenderAccountId = 2,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(826)
-                        },
-                        new
-                        {
-                            TransactionId = 11,
-                            Amount = 3000m,
-                            ReceiverAccountId = 4,
-                            SenderAccountId = 2,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(828)
+                            SenderAccountId = 2
                         },
                         new
                         {
                             TransactionId = 6,
                             Amount = 5000m,
                             ReceiverAccountId = 1,
-                            SenderAccountId = 3,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(830)
+                            SenderAccountId = 3
                         },
                         new
                         {
                             TransactionId = 7,
                             Amount = 8000m,
                             ReceiverAccountId = 2,
-                            SenderAccountId = 3,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(832)
-                        },
-                        new
-                        {
-                            TransactionId = 12,
-                            Amount = 15000m,
-                            ReceiverAccountId = 1,
-                            SenderAccountId = 3,
-                            TransactionDate = new DateTime(2024, 1, 9, 22, 47, 31, 563, DateTimeKind.Local).AddTicks(833)
+                            SenderAccountId = 3
                         });
                 });
 
