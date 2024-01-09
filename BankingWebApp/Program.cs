@@ -9,14 +9,17 @@ using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
 builder.AddBankAppServices();
+
 GlobalDiagnosticsContext.Set("configDir", "C:\\Users\\kopil\\OneDrive\\Documents\\KU_University_Documents\\SAPM_Final_Project\\BankingWebApp\\BankingWebApp");
 GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
 var app = builder.Build();
 
+//Seeding Initial dummy data into the Database using the Dependency Injection container
 //using (var scope = app.Services.CreateScope())
 //{
 //    var serviceScope = scope.ServiceProvider;
@@ -29,7 +32,11 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
-app.UseHttpLogging();
+if (app.Configuration.GetValue<bool>("EnableHttpLogging"))
+{
+    app.UseHttpLogging();
+}
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -38,7 +45,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=LoginPage}/{id?}");
 
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();

@@ -1,27 +1,76 @@
 ﻿
 using BankingWebApp.Base;
+using BankingWebApp.Settings;
+using BankingWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 
 namespace BankingWebApp.Controllers;
 
 public class AccountController : BaseController<AccountController>
 {
     private AccountRepository _repo;
+    private IOptions<CurrentUser> _user;
 
-    public AccountController(ILogger<AccountController> logger, AccountRepository repo) : base(logger)
+    public AccountController(ILogger<AccountController> logger, AccountRepository repo, IOptions<CurrentUser> user) : base(logger)
     {
         _repo = repo;
+        _user = user;
     }
 
-    public IActionResult Index()
+    [HttpGet]
+    public IActionResult Index(int id)
     {
-        _logger.LogCritical($"{this.GetType()} {nameof(Index)} page ran");
-        _repo.Insert(new Account());
-        var accounts = _repo.GetAll();
-        return View();
+        id = _user.Value.Id;
+        ViewData.SetData("ActiveLink", "ShowTransactions");
+        var getCustomer = _repo.GetAccountsWithCustomersAndTransactions()!.FirstOrDefault(a => a.CustomerId == id)!.Customer;
+
+        AccountViewModel vm = new AccountViewModel();
+        vm.Customer = getCustomer;
+        vm.AccountTypes = new();
+        foreach (var account in getCustomer!.Accounts!)
+        {
+            var accountType = account.AccountType.ToString();
+            var selectedItem = new SelectListItem(text: accountType, value: accountType);
+            vm.AccountTypes.Add(selectedItem);
+        }
+        ViewData.SetData("CustomerFullName", vm.Customer!.FullName);
+
+        return View(vm);
     }
 
+    [HttpPost]
+    public IActionResult Index(int id, string accountSelected)
+    {
+        id = _user.Value.Id;
 
+        var allAccounts = _repo.GetAccountsWithCustomersAndTransactions();
+
+        var selectedAccount = allAccounts.FirstOrDefault(a => a.CustomerId == id && a.AccountType.ToString() == accountSelected);
+
+        List<Transaction> AllTransactions = new();
+
+        if (selectedAccount != null)
+        {
+            AllTransactions = selectedAccount.DebitTransactions!.Concat(selectedAccount.CreditTransactions!).ToList();
+        }
+
+        AccountViewModel vm = new();
+        vm.SelectedAccount = selectedAccount;
+        vm.Transactions = AllTransactions;
+        vm.AccountTypes = new();
+        foreach (var account in selectedAccount.Customer.Accounts)
+        {
+            var accountType = account.AccountType.ToString();
+            var selectedItem = new SelectListItem(text: accountType, value: accountType);
+            vm.AccountTypes.Add(selectedItem);
+        }
+
+        ViewData.SetData("CustomerFullName", _user.Value.FullName!);
+
+        return View(vm);
+    }
 
     #region Showcasing Insertion of Related Data (Data between relational tables)
     //public IActionResult UserAccountDisabled()

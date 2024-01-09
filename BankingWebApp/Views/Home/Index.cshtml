@@ -2,8 +2,226 @@
     ViewData["Title"] = "Home Page";
 }
 
-@Html.ActionLink("Register Customer", "RegisterCustomer", "Customer", new{ floatVal = 99.99, intVal = 90, FirstName = "johnny66", LastName = "pattrick99", Phonenum = "555444", Password = "GregsPassword"}, new {@class="btn btn-primary"})
+<style>
+    hr{
+        margin: 0.5rem 0;       
+    }
 
-@section Scripts{
+    h6{
+        margin-bottom: 0;
+    }
 
+    b{
+        font-weight:bolder;
+    }
+
+    /* both of the below works exactly same */
+    .gm-style-iw button[title="Close"] {
+        /* display: none !important; */
+    }
+
+    button.gm-ui-hover-effect{
+        display: none !important;
+    }
+</style>
+
+
+<div class="container row mx-auto mt-5">
+    @Html.ActionLink("Register Customer", "RegisterCustomer", "Customer", new { floatVal = 99.99, intVal = 90, FirstName = "johnny66", LastName = "pattrick99", Phonenum = "555444", Password = "GregsPassword" }, new { @class = "btn btn-primary w-25" })
+    <h1>Google Maps Examples (Javascript GoogleApi)</h1>
+    <div class="col-12">
+        <div id="map" style="height: 500px;"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Include the Google Maps JavaScript API -->
+
+
+    <script>
+        //setting an array of characters intended to use for the label of the markers
+        const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //declare global map variable which to be used on everywhere in additional to initMap() method
+        let map = null;
+        let count = 0;
+        const listOfCoordinates = [
+            { lat: 51.41904458727552, lng: -0.2201053450227951 },
+            { lat: 51.420195375662146, lng: -0.2153417418867678 },
+            { lat: 51.41635484095605, lng: -0.21220892180631742 },
+            { lat: 51.414748946803854, lng: -0.21568506463531031 },
+            { lat: 51.41359802129171, lng: -0.21841018895186645 },
+            { lat: 51.41377200026301, lng: -0.21875351170040894 },
+            { lat: 51.414695415922964, lng: -0.22062032893185066 }, //G
+            { lat: 51.4162645108869, lng: -0.21864622342194553 },
+            { lat: 51.41829856651329, lng: -0.21421521419856882 },
+            { lat: 51.41866656032916, lng: -0.21618932000268823 },
+            { lat: 51.4157158356333, lng: -0.21600692978984315 },
+            { lat: 51.41582289472497, lng: -0.2169725250338635 },
+            { lat: 51.41511696909235, lng: -0.22124260140384683 },
+            { lat: 51.4154113848733, lng: -0.22171467017570598 },
+            { lat: 51.416702777162776, lng: -0.2193006821045754 },
+            { lat: 51.41675630558882, lng: -0.22038429451270664 },
+        ];
+
+        const tourStops = [
+            {
+                position: { lat: 51.41640167859829, lng: -0.22097438047753062 },
+                title: "Parker Still"
+            },
+            {
+                position: { lat: 51.41512366039721, lng: -0.2175518818734997 },
+                title: "Global Pay Ltd"
+            },
+            {
+                position: { lat: 51.41625492077173, lng: - 0.21287135508997743 },
+                title: "Manifesto Park"
+            },
+            { 
+                position: { lat: 51.41259993513158, lng: - 0.22193491591545006 },
+                title: "Skytech Zone"
+            }
+        ];
+
+        let animatedMarker;
+
+        async function initMap() {
+
+            //#region Initialisation of GoogleMap
+            const { Map } = await google.maps.importLibrary("maps");
+
+            let centerMapAtHome = new google.maps.LatLng(51.41702394686937, -0.21643608325841981);
+
+            let mapOptions = {
+                zoom: 15,
+                center: centerMapAtHome,
+                mapId: "dc91e1bfbcd73a70"
+            }
+
+            map = new Map(document.getElementById("map"), mapOptions);
+
+            //places a single Marker on the map. Here, the marker is given the centreMapCoordinates
+            placeMarker(centerMapAtHome, "My Home");
+            //#endregion
+
+
+
+            //#region Placing each marker with a click Event so that we can click on it and see an additional marker pop-up
+            const { InfoWindow } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+
+            //create an info window to share between markers
+            const infoWindow = new InfoWindow();
+
+            const infoWindow2 = new InfoWindow({
+                content: "Random InfoWindow2<br> Hello World",
+                arialLabel: "Uluru"
+            });
+
+            infoWindow2.setPosition(new google.maps.LatLng(51.41389662220369, -0.2095274626024563));
+            infoWindow2.open(map);
+
+
+            //creating the markers with their respective infoWindow(s)
+            tourStops.forEach(({ position, title }, i) => {
+               //creating a marker pin
+                const pin = new PinElement({
+                    background: "#b561e6",
+                    borderColor: "#4b0082",
+                    glyphColor: "#e3dac9",
+                    glyph: `${i + 1}`,
+                    scale: 1.0
+                });
+
+                //creating an advancedMarkerElement
+                const specialMarker = new AdvancedMarkerElement({
+                    position,
+                    map,
+                    title: `${i + 1}. ${title}`,
+                    content: pin.element,
+                });
+
+                //Add a click listener for each marker and set up the info window
+                specialMarker.addListener("click", ({ domEvent, latLng }) => {
+                    const { target } = domEvent;
+                    infoWindow.close();
+                    infoWindow.setContent(
+                        `<span class="fs-6 alert-link">${specialMarker.title}</span><br><hr>
+                        <b class="alert-link">Location</b>: Somewhere in the world <br>
+                        <b class="alert-link">Opening hours</b>: 05:00 - 17:00 <br>
+                        <b class="alert-link">Phone</b>: +44 225-678-9922`
+                    );
+                    infoWindow.open(specialMarker.map, specialMarker);
+                });
+
+                
+            });
+
+                 map.addListener("click", function (event) {
+                    infoWindow.close();
+                    //infoWindow2.close();
+                    infoWindow2.open(map);
+                    console.log("infoWindow2.open has been executed" + event.latLng)
+             });
+            //#endregion
+
+
+            //placing all the markers for each coordinate in listOfCoordinates lis
+            listOfCoordinates.forEach((marker, i) => {
+                placeMarker(new google.maps.LatLng(marker.lat, marker.lng), `count: ${count} - i: ${i}`);
+            });
+
+
+            //#region placing an animated marker on map and adding clicklistener to it to animated upon click and stop animated if re-clicked
+            animatedMarker = new google.maps.Marker({
+                position: { lat: 51.41322747051438, lng: -0.2135615050026514 },
+                title: "This is an animated marker"
+            });
+
+            animatedMarker.addListener("click", toggleBounce);
+
+            animatedMarker.setMap(map);
+            //#endregion
+        }
+
+        initMap();
+
+        //adding animation on click of each marker
+        function toggleBounce() {
+            console.log("toggle bounce invoked")
+            if (animatedMarker.getAnimation() !== null) {
+                console.log("marker animation set to null")
+                animatedMarker.setAnimation(null);
+            } else {
+                console.log("marker animation set to Bounce")
+                animatedMarker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+
+        //#region places the marker on the given position in the map
+        function placeMarker(markerPosition, titleOfMarker) {
+            //console.log(count)
+            // var marker = new google.maps.Marker({
+            //     position: markerPosition,
+            //     title: titleOfMarker,
+            //     label: alphabets[count++ % alphabets.length]
+            // });
+            const marker = createMarker(markerPosition, titleOfMarker, alphabets[count++ % alphabets.length]);
+
+
+            marker.setMap(map);
+        }
+        //#endregion
+
+        //#region Creates a google.maps.Marker element
+        function createMarker(mPosition, mTitle, mLabel) {
+            return new google.maps.Marker({
+                position: mPosition,
+                title: mTitle,
+                label: mLabel, 
+                draggable: true,
+                animation: google.maps.Animation.DROP
+            });
+        }
+        //#endregion
+    </script>
 }

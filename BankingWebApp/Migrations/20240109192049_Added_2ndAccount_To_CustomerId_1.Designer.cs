@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingWebApp.Migrations
 {
     [DbContext(typeof(BankAppDbContext))]
-    [Migration("20231216132336_changing_Transaction_ColumnOrder")]
-    partial class changing_Transaction_ColumnOrder
+    [Migration("20240109192049_Added_2ndAccount_To_CustomerId_1")]
+    partial class Added_2ndAccount_To_CustomerId_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,10 @@ namespace BankingWebApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
+                    b.Property<string>("AccountType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<decimal>("Balance")
                         .HasPrecision(15, 3)
                         .HasColumnType("decimal(15,3)");
@@ -50,19 +54,29 @@ namespace BankingWebApp.Migrations
                         new
                         {
                             AccountId = 1,
-                            Balance = 52000.00m,
+                            AccountType = "Savings",
+                            Balance = 57000.00m,
+                            CustomerId = 1
+                        },
+                        new
+                        {
+                            AccountId = 4,
+                            AccountType = "Debit",
+                            Balance = 16500.00m,
                             CustomerId = 1
                         },
                         new
                         {
                             AccountId = 2,
-                            Balance = 91000.00m,
+                            AccountType = "Debit",
+                            Balance = 92500.00m,
                             CustomerId = 2
                         },
                         new
                         {
                             AccountId = 3,
-                            Balance = 157000.00m,
+                            AccountType = "Debit",
+                            Balance = 159000.00m,
                             CustomerId = 3
                         });
                 });
@@ -79,13 +93,22 @@ namespace BankingWebApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Phonenum")
                         .HasColumnType("nvarchar(max)");
@@ -107,6 +130,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "john.gerrad@gmail.com",
                             FirstName = "John",
                             LastName = "Gerrad",
+                            Password = "1234",
                             Phonenum = "07705089501"
                         },
                         new
@@ -115,6 +139,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "pattrick.george@outlook.com",
                             FirstName = "Pattrick",
                             LastName = "George",
+                            Password = "5678",
                             Phonenum = "07755589511"
                         },
                         new
@@ -123,6 +148,7 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "lilliana.bestie@hotmail.com",
                             FirstName = "Lilliana",
                             LastName = "Johnson",
+                            Password = "9101112",
                             Phonenum = "07712312355"
                         });
                 });
@@ -148,6 +174,9 @@ namespace BankingWebApp.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("TransactionId");
 
                     b.HasIndex("ReceiverAccountId");
@@ -162,49 +191,80 @@ namespace BankingWebApp.Migrations
                             TransactionId = 1,
                             Amount = 1000m,
                             ReceiverAccountId = 2,
-                            SenderAccountId = 1
+                            SenderAccountId = 1,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5132)
                         },
                         new
                         {
                             TransactionId = 2,
                             Amount = 3000m,
                             ReceiverAccountId = 2,
-                            SenderAccountId = 1
+                            SenderAccountId = 1,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5282)
                         },
                         new
                         {
                             TransactionId = 3,
                             Amount = 5000m,
                             ReceiverAccountId = 3,
-                            SenderAccountId = 1
+                            SenderAccountId = 1,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5284)
+                        },
+                        new
+                        {
+                            TransactionId = 8,
+                            Amount = 2000m,
+                            ReceiverAccountId = 3,
+                            SenderAccountId = 4,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5287)
+                        },
+                        new
+                        {
+                            TransactionId = 9,
+                            Amount = 1500m,
+                            ReceiverAccountId = 2,
+                            SenderAccountId = 4,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5289)
+                        },
+                        new
+                        {
+                            TransactionId = 10,
+                            Amount = 5000m,
+                            ReceiverAccountId = 1,
+                            SenderAccountId = 4,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5291)
                         },
                         new
                         {
                             TransactionId = 4,
                             Amount = 6000m,
                             ReceiverAccountId = 1,
-                            SenderAccountId = 2
+                            SenderAccountId = 2,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5294)
                         },
                         new
                         {
                             TransactionId = 5,
                             Amount = 15000m,
                             ReceiverAccountId = 3,
-                            SenderAccountId = 2
+                            SenderAccountId = 2,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5296)
                         },
                         new
                         {
                             TransactionId = 6,
                             Amount = 5000m,
                             ReceiverAccountId = 1,
-                            SenderAccountId = 3
+                            SenderAccountId = 3,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5298)
                         },
                         new
                         {
                             TransactionId = 7,
                             Amount = 8000m,
                             ReceiverAccountId = 2,
-                            SenderAccountId = 3
+                            SenderAccountId = 3,
+                            TransactionDate = new DateTime(2024, 1, 9, 19, 20, 49, 492, DateTimeKind.Local).AddTicks(5300)
                         });
                 });
 

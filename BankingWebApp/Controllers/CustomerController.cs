@@ -15,7 +15,6 @@ public class CustomerController : BaseController<CustomerController>
     //[Bind("FirstName", "LastName")] 
     public IActionResult RegisterCustomer(Customer customer, float floatVal, int intVal)
     {
-        _logger.LogCritical($" {this.GetType()} {nameof(RegisterCustomer)} page ran");
         var customers = _repo.GetCustomersWithAccountsAndTransactions();
         return View();
     }

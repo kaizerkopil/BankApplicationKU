@@ -1,5 +1,4 @@
-﻿
-
+﻿using System.ComponentModel;
 namespace BankingWebApp.Models.Bank;
 
 [PrimaryKey(nameof(AccountId))]
@@ -12,7 +11,7 @@ public class Account
 
     [Precision(15, 3)]
     [Range(0, 1_000_000_000_000)]
-    public decimal Balance { get; private set; }
+    public decimal Balance { get; set; }
     public int CustomerId { get; set; }
     public Customer? Customer { get; set; }
 
@@ -21,6 +20,10 @@ public class Account
 
     [InverseProperty(nameof(Transaction.Sender))]
     public List<Transaction>? CreditTransactions { get; set; } = new();
+
+    //[EnumDataType(typeof(AccountTypeEnum))]
+    [Column(TypeName = "nvarchar(50)")]
+    public AccountTypeEnum AccountType { get; set; } = AccountTypeEnum.None;
 
     [NotMapped]
     public List<Account> SavedAccounts { get; set; } = new();
@@ -35,16 +38,17 @@ public class Account
         Balance = balance;
     }
 
-    public Account(int accountId, int customerId, decimal balance)
+    public Account(int accountId, int customerId, decimal balance, AccountTypeEnum accountType)
     {
         AccountId = accountId;
         CustomerId = customerId;
         Balance = balance;
+        AccountType = accountType;
     }
 
     private string CreateAccountNumber()
     {
-        var tempNumber = 100000 + AccountId;
+        var tempNumber = 100_000 + AccountId;
         string accountNumber = tempNumber.ToString().Insert(2, "-").Insert(5, "-");
         return accountNumber.ToString();
     }
@@ -80,6 +84,6 @@ public class Account
         this.Balance -= amount;
         receiver.Balance += amount;
 
-        return new Transaction(transactionId, this.AccountId, receiver.AccountId, amount);
+        return new Transaction(transactionId, this.AccountId, receiver.AccountId, amount, DateTime.Now);
     }
 }

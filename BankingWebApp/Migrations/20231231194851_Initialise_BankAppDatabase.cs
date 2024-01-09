@@ -2,10 +2,12 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BankingWebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Initializing_BankAppDatabase : Migration
+    public partial class Initialise_BankAppDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +18,10 @@ namespace BankingWebApp.Migrations
                 {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Phonenum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StreetAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -53,10 +56,10 @@ namespace BankingWebApp.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    SenderAccountId = table.Column<int>(type: "int", nullable: false),
-                    ReceiverAccountId = table.Column<int>(type: "int", nullable: false),
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SenderAccountId = table.Column<int>(type: "int", nullable: true),
+                    ReceiverAccountId = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(15,3)", precision: 15, scale: 3, nullable: false)
                 },
                 constraints: table =>
@@ -66,14 +69,46 @@ namespace BankingWebApp.Migrations
                         name: "FK_Transactions_Accounts_ReceiverAccountId",
                         column: x => x.ReceiverAccountId,
                         principalTable: "Accounts",
-                        principalColumn: "AccountId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "AccountId");
                     table.ForeignKey(
                         name: "FK_Transactions_Accounts_SenderAccountId",
                         column: x => x.SenderAccountId,
                         principalTable: "Accounts",
-                        principalColumn: "AccountId",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "AccountId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "CustomerId", "City", "EmailAddress", "FirstName", "LastName", "Password", "Phonenum", "PostCode", "StreetAddress" },
+                values: new object[,]
+                {
+                    { 1, null, "john.gerrad@gmail.com", "John", "Gerrad", "1234", "07705089501", null, null },
+                    { 2, null, "pattrick.george@outlook.com", "Pattrick", "George", "5678", "07755589511", null, null },
+                    { 3, null, "lilliana.bestie@hotmail.com", "Lilliana", "Johnson", "9101112", "07712312355", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Accounts",
+                columns: new[] { "AccountId", "Balance", "CustomerId" },
+                values: new object[,]
+                {
+                    { 1, 52000.00m, 1 },
+                    { 2, 91000.00m, 2 },
+                    { 3, 157000.00m, 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Transactions",
+                columns: new[] { "TransactionId", "Amount", "ReceiverAccountId", "SenderAccountId" },
+                values: new object[,]
+                {
+                    { 1, 1000m, 2, 1 },
+                    { 2, 3000m, 2, 1 },
+                    { 3, 5000m, 3, 1 },
+                    { 4, 6000m, 1, 2 },
+                    { 5, 15000m, 3, 2 },
+                    { 6, 5000m, 1, 3 },
+                    { 7, 8000m, 2, 3 }
                 });
 
             migrationBuilder.CreateIndex(
