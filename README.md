@@ -15,9 +15,11 @@ Module Title: Software Architecture and Programming Modules
 Module Code: C17250
 
 Technologies used:
-	
-1. Asp Net Core MVC Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, 
-Microsoft Logging framework
+
+Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
+
+1. Asp Net Core MVC Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, Microsoft Logging Framework
+
 	- Microsoft.EntityFrameworkCore 8.0.0
 	- Microsoft.EntityFrameworkCore.SqlServer 8.0.0
  	- Microsoft.EntityFrameworkCore.Tools 8.0.0
@@ -25,11 +27,11 @@ Microsoft Logging framework
    	- Microsoft.EntityFrameworkCore.Abstractions 8.0.0
    	- Microsoft.EntityFrameworkCore.Design 8.0.0
   
-1. AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1
+1. [AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1](https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection)
 
-1. Bootstrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1
+1. [Bootstrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
-1. Font Awesome 6.5.1. [Link to Website](https://fontawesome.com/download)
-1. JQuery 3.7.1
+1. [Font Awesome 6.5.1](https://fontawesome.com/download)
+1. [JQuery 3.7.1](https://api.jquery.com/)
 
-1. X.PagedList.Mvc.Core 8.4.7
+1. [X.PagedList.Mvc.Core 8.4.7](https://github.com/dncuug/X.PagedList), Successor of [PagedList](https://github.com/troygoode/PagedList)
