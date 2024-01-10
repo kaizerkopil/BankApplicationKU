@@ -18,13 +18,12 @@ Technologies used:
 	
 1. Asp Net Core MVC Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, 
 Microsoft Logging framework
- 
-	1. Microsoft.EntityFrameworkCore 8.0.0
-	2. Microsoft.EntityFrameworkCore.SqlServer 8.0.0
-	3. Microsoft.EntityFrameworkCore.Tools 8.0.0
-	4. Microsoft.EntityFrameworkCore.Relational 8.0.0
-	5. Microsoft.EntityFrameworkCore.Abstractions 8.0.0
-	6.  Microsoft.EntityFrameworkCore.Design 8.0.0
+	- Microsoft.EntityFrameworkCore 8.0.0
+	- Microsoft.EntityFrameworkCore.SqlServer 8.0.0
+ 	- Microsoft.EntityFrameworkCore.Tools 8.0.0
+  	- Microsoft.EntityFrameworkCore.Relational 8.0.0
+   	- Microsoft.EntityFrameworkCore.Abstractions 8.0.0
+   	- Microsoft.EntityFrameworkCore.Design 8.0.0
   
 1. AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1
 
