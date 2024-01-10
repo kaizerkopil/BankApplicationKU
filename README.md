@@ -27,10 +27,9 @@ Microsoft Logging framework
   
 1. AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1
 
-1. Boostrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1
+1. Bootstrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1
 
-1. Font Awesome 6.5.1. Ref Link: [Link to Website)(https://fontawesome.com/download)
- 	
+1. Font Awesome 6.5.1. [Link to Website](https://fontawesome.com/download)
 1. JQuery 3.7.1
 
 1. X.PagedList.Mvc.Core 8.4.7
