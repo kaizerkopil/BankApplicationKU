@@ -17,7 +17,7 @@ Module Code: C17250
 # Technologies used in developing the application:
 
 Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
-1. [ASP Net Core MVC]<https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-8.0#aspnet-core-mvc>
+1. ASP Net Core MVC https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-8.0#aspnet-core-mvc
  Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, Microsoft Logging Framework
 
 	- Microsoft.EntityFrameworkCore 8.0.0
