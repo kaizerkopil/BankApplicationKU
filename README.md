@@ -1,4 +1,4 @@
-# BankApplicationKU
+# Banking Application KU ( FastBank - Never has been faster to do banking )
 
 Kingston University London - Penryn Road Campus™ 
 
@@ -14,11 +14,11 @@ Module Title: Software Architecture and Programming Modules
 
 Module Code: C17250
 
-Technologies used:
+# Technologies used in developing the application:
 
 Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
-
-1. Asp Net Core MVC Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, Microsoft Logging Framework
+1. [ASP Net Core MVC] https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-8.0#aspnet-core-mvc
+ Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, Microsoft Logging Framework
 
 	- Microsoft.EntityFrameworkCore 8.0.0
 	- Microsoft.EntityFrameworkCore.SqlServer 8.0.0
