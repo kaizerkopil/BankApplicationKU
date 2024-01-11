@@ -23,7 +23,7 @@ Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.co
  	- Microsoft Dependency Injection Framework to handle dependencies,
   	- [NLog 5.2]([url](https://github.com/nlog/nlog/wiki)) Logging Framework for ASP.NET Core which includes File, Database, Console and Debug logging. This makes sure the application is diagnosed and any problems occurring can be traced back to source
 
-	- Microsoft.EntityFrameworkCore 8.0.0
+1. Microsoft.EntityFrameworkCore 8.0.0 - Object Relational Mapper (ORM). It is a very powerful which helps to implement Code First database. If dev has adequate MySQL knowledge he can structure and establish and fully functional Relational Database. I've used [Microsoft SQL Server](https://learn.microsoft.com/en-us/sql/relational-databases/databases/databases?view=sql-server-ver16) database. 
 	- Microsoft.EntityFrameworkCore.SqlServer 8.0.0
  	- Microsoft.EntityFrameworkCore.Tools 8.0.0
   	- Microsoft.EntityFrameworkCore.Relational 8.0.0
