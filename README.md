@@ -17,8 +17,11 @@ Module Code: C17250
 # Technologies used in developing the application:
 
 Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
-1. [ASP Net Core MVC](https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-8.0#aspnet-core-mvc) 
- Web Application: includes Pages powered by Razer engine, Dependency Injection Framework, Microsoft Logging Framework
+1. [ASP Net Core 8.0 MVC](https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-8.0#aspnet-core-mvc) 
+ Web Application which includes
+	- Pages (UI) powered by the latest Razer engine (.cshtml) files which is a combination of HTML and C#,
+ 	- Microsoft Dependency Injection Framework to handle dependencies,
+  	- [NLog 5.2]([url](https://github.com/nlog/nlog/wiki)) Logging Framework for ASP.NET Core which includes File, Database, Console and Debug logging. This makes sure the application is diagnosed and any problems occurring can be traced back to source
 
 	- Microsoft.EntityFrameworkCore 8.0.0
 	- Microsoft.EntityFrameworkCore.SqlServer 8.0.0
