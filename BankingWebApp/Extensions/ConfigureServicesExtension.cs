@@ -19,6 +19,8 @@ public static class ConfigureServicesExtension
         //Register Logging and Services
         services.ConfigureBankAppLogging(builder.Configuration.GetValue<bool>("EnableHttpLogging"));
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<ISessionManager, SessionManager>();
 
         //Register Repositories
         services.AddScoped<CustomerRepository>();

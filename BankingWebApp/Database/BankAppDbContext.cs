@@ -29,6 +29,7 @@ public class BankAppDbContext : DbContext
         //        v => Enum.Parse<AccountTypeEnum>(v)
         //    );
 
+        //Adding all the dummy data to modelBuilder using extension method
         modelBuilder.SeedDataUsingModelBuilder();
         base.OnModelCreating(modelBuilder);
     }

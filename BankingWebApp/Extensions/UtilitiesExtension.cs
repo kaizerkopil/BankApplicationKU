@@ -6,6 +6,8 @@ namespace BankingWebApp.Extensions
     {
         public static void SetData(this ViewDataDictionary dict, string key, object value)
         {
+            //same as
+            //ViewData["ActiveLink"] = "Home";
             dict[key] = value;
         }
     }

@@ -11,59 +11,37 @@ public class HomeController : BaseController<HomeController>
 {
     private CustomerRepository _repo;
     private IOptions<CurrentUser> _user;
-    public HomeController(ILogger<HomeController> logger, CustomerRepository repo, IOptions<CurrentUser> user) : base(logger)
+    private readonly ISessionManager _sessionManager;
+
+    public HomeController(ILogger<HomeController> logger, CustomerRepository repo, IOptions<CurrentUser> user, ISessionManager sessionManager) : base(logger)
     {
         _user = user;
+        _sessionManager = sessionManager;
         _repo = repo;
     }
 
-    #region HomeController: Login Page
-    [HttpGet]
-    public IActionResult LoginPage()
-    {
-        _logger.LogInformation("User has visited the loging page");
-
-        return View();
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult LoginPage([Bind("EmailAddress, Password")] Customer cust)
-    {
-        var entriesToValidate = ModelState.Where(x => x.Key == "EmailAddress" || x.Key == "Password");
-        var excludeEntries = ModelState.Except(entriesToValidate).ToList();
-
-        excludeEntries.ForEach(e => ModelState.Remove(e.Key));
-
-        if (!ModelState.IsValid) return View(cust);
-
-        try
-        {
-            var custDb = _repo.GetCustomerByEmailAndPassword(cust.EmailAddress!, cust.Password!);
-            return RedirectToAction("Index", "Home", new { id = custDb.CustomerId });
-        } catch (Exception)
-        {
-            ViewData["UserNotFound"] = "No user found with the following Email and Password";
-            return View();
-        }
-    }
-    #endregion
 
     [HttpGet]
     public IActionResult Index(int id)
     {
-        if (id != 0) _user.Value.Id = id;
+        if (id != 0)
+        {
+            //retrieving customer from database
+            var custDb = _repo.GetById(id);
+            //assigning customer Id and FullName to HttpContext.Session such that the data persists across User's session
+            _sessionManager.SetUserData(new UserData(custDb.CustomerId, custDb.FullName));
+        }
 
-        //ViewData["Current"] = "Home";
+        var userId = _sessionManager.GetUserData().Id;
+        var userFullName = _sessionManager.GetUserData().FullName;
+
         //setting link of navbar item to current page
         ViewData.SetData("ActiveLink", "Home");
+        //setting Customer FullName to footer anchor tag element innerText
+        ViewData.SetData("CustomerFullName", userFullName!);
 
-        var custDb = _repo.GetById(_user.Value.Id);
-        _user.Value.FullName = custDb.FullName;
-        ViewData["CustomerFullName"] = custDb.FullName;
-        ViewData["CustomerId"] = _user.Value.Id;
         _logger.LogInformation("User has successfully logged in");
-        //this will only show the Login Page
+        //this will display the LoginPage.cshtml view
         return View();
     }
 
