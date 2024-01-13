@@ -26,9 +26,10 @@
 </style>
 
 
-<div class="container row mx-auto mt-5">
-    @Html.ActionLink("Register Customer", "RegisterCustomer", "Customer", new { floatVal = 99.99, intVal = 90, FirstName = "johnny66", LastName = "pattrick99", Phonenum = "555444", Password = "GregsPassword" }, new { @class = "btn btn-primary w-25" })
+<div class="container row mx-auto mt-5 gap-2 py-2">
+    @Html.ActionLink("Register Customer", "RegisterCustomer", "Customer", new { floatVal = 99.99, intVal = 90, FirstName = "johnny66", LastName = "pattrick99", Phonenum = "555444", Password = "GregsPassword" }, new { @class = "btn btn-primary w-auto ms-2" })
     <h1>Google Maps Examples (Javascript GoogleApi)</h1>
+
     <div class="col-12">
         <div id="map" style="height: 500px;"></div>
     </div>

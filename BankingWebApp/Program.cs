@@ -1,13 +1,22 @@
 /* 
  * Author: Kopil Kaiser
  * Student Id: K2360182
- * 
+ * Module Code: 
+ * Module Title: Software Architecture and Programming Models
  */
 
 using NLog;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -19,14 +28,6 @@ GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnec
 
 var app = builder.Build();
 
-//Seeding Initial dummy data into the Database using the Dependency Injection container
-//using (var scope = app.Services.CreateScope())
-//{
-//    var serviceScope = scope.ServiceProvider;
-//    SeedDataInitalizerExtension.InitalizeDatabase(serviceScope);
-//}
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -39,13 +40,15 @@ if (app.Configuration.GetValue<bool>("EnableHttpLogging"))
 
 app.UseStaticFiles();
 
+app.UseSession();
+
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=LoginPage}/{id?}");
+    pattern: "{controller=Customer}/{action=LoginPage}/{id?}");
 
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();

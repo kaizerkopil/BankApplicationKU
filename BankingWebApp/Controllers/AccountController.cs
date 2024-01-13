@@ -1,5 +1,4 @@
-﻿
-using BankingWebApp.Base;
+﻿using BankingWebApp.Base;
 using BankingWebApp.Settings;
 using BankingWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +11,34 @@ public class AccountController : BaseController<AccountController>
 {
     private AccountRepository _repo;
     private IOptions<CurrentUser> _user;
+    private readonly ISessionManager _sessionManager;
 
-    public AccountController(ILogger<AccountController> logger, AccountRepository repo, IOptions<CurrentUser> user) : base(logger)
+    public AccountController(ILogger<AccountController> logger, AccountRepository repo, IOptions<CurrentUser> user, ISessionManager sessionManager) : base(logger)
     {
         _repo = repo;
         _user = user;
+        _sessionManager = sessionManager;
     }
 
     [HttpGet]
-    public IActionResult Index(int id)
+    public IActionResult Index()
     {
-        id = _user.Value.Id;
+        return Content("Account Index Get");
+    }
+
+    [HttpPost]
+    public IActionResult Index(int id, string accountSelected)
+    {
+        return Content("Account Index Post");
+    }
+
+    [HttpGet]
+    public IActionResult ShowTransactions()
+    {
+        int userId = _sessionManager.GetUserData().Id;
+
         ViewData.SetData("ActiveLink", "ShowTransactions");
-        var getCustomer = _repo.GetAccountsWithCustomersAndTransactions()!.FirstOrDefault(a => a.CustomerId == id)!.Customer;
+        var getCustomer = _repo.GetAccountsWithCustomersAndTransactions()!.FirstOrDefault(a => a.CustomerId == userId)!.Customer;
 
         AccountViewModel vm = new AccountViewModel();
         vm.Customer = getCustomer;
@@ -41,13 +55,14 @@ public class AccountController : BaseController<AccountController>
     }
 
     [HttpPost]
-    public IActionResult Index(int id, string accountSelected)
+    public IActionResult ShowTransactions(string accountTypeSelected)
     {
-        id = _user.Value.Id;
+        int userId = _sessionManager.GetUserData().Id;
+        string userFullName = _sessionManager.GetUserData().FullName!;
 
         var allAccounts = _repo.GetAccountsWithCustomersAndTransactions();
 
-        var selectedAccount = allAccounts.FirstOrDefault(a => a.CustomerId == id && a.AccountType.ToString() == accountSelected);
+        var selectedAccount = allAccounts.FirstOrDefault(a => a.CustomerId == userId && a.AccountType.ToString() == accountTypeSelected);
 
         List<Transaction> AllTransactions = new();
 
@@ -60,18 +75,19 @@ public class AccountController : BaseController<AccountController>
         vm.SelectedAccount = selectedAccount;
         vm.Transactions = AllTransactions;
         vm.AccountTypes = new();
-        foreach (var account in selectedAccount.Customer.Accounts)
+        foreach (var account in selectedAccount!.Customer!.Accounts!)
         {
             var accountType = account.AccountType.ToString();
             var selectedItem = new SelectListItem(text: accountType, value: accountType);
             vm.AccountTypes.Add(selectedItem);
         }
 
-        ViewData.SetData("CustomerFullName", _user.Value.FullName!);
+        ViewData.SetData("CustomerFullName", userFullName);
 
         return View(vm);
     }
 
+    //Todo - Remove these codes
     #region Showcasing Insertion of Related Data (Data between relational tables)
     //public IActionResult UserAccountDisabled()
     //{
