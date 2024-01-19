@@ -40,3 +40,14 @@ Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.co
 1. [JQuery 3.7.1](https://api.jquery.com/)
 
 1. [X.PagedList.Mvc.Core 8.4.7](https://github.com/dncuug/X.PagedList), Successor of [PagedList](https://github.com/troygoode/PagedList)
+***
+Instructions to make sure Applicaiton runs on your device:
+
+* open "Package Manager Console" in "Microsoft Visual Studio"
+
+* Run the command "update-database" - this will create the .mdf database for Microsoft SQL Server database in the following directory "C:\Users\[userName]\K2360182_FastBankApp.mdf" 
+
+* Please ensure you have this database created in the above directory mentioned
+
+if you have any questions please send me an email on: k2360182@kingston.ac.uk 
+***
