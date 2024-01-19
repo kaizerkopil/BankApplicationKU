@@ -32,7 +32,7 @@ Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.co
   
 1. [AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1](https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection)
    
-1. [Google Map JavaScript API (Application Programming Interface)]([https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection(https://developers.google.com/maps/documentation/javascript/overview))
+1. [Google Map JavaScript API -Application Programming Interface](https://developers.google.com/maps/documentation/javascript/overview)
 
 1. [Bootstrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
