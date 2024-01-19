@@ -15,6 +15,7 @@ public class CustomerController : BaseController<CustomerController>
         _sessionManager = sessionManager;
     }
 
+    #region CustomerController: RegisterCustomer
     [HttpGet]
     public IActionResult RegisterCustomer()
     {
@@ -57,9 +58,28 @@ public class CustomerController : BaseController<CustomerController>
             _repo.Insert(customer);
             _repo.Save();
             var fetchCust = _repo.GetCustomerByEmail(customer.EmailAddress!);
-            return RedirectToAction(nameof(OpenAccount), new { id = fetchCust.CustomerId });
+            return RedirectToAction("OpenAccount", "Account", new { id = fetchCust.CustomerId });
         }
     }
+    #endregion
+
+    #region OpenAccount
+    [HttpGet]
+    public IActionResult OpenAccount(int id)
+    {
+        var customer = _repo.GetById(id);
+
+        return View(customer);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult OpenAccount(Account account)
+    {
+
+        return View();
+    }
+    #endregion
 
     #region CustomerController: LoginPage
     [HttpGet]
@@ -93,19 +113,5 @@ public class CustomerController : BaseController<CustomerController>
     }
     #endregion
 
-    [HttpGet]
-    public IActionResult OpenAccount(int id)
-    {
-        var customer = _repo.GetById(id);
 
-        return View(customer);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult OpenAccount(Account account)
-    {
-
-        return View();
-    }
 }

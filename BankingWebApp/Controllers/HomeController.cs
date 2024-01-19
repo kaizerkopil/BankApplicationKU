@@ -16,7 +16,7 @@ public class HomeController : BaseController<HomeController>
         _repo = repo;
     }
 
-
+    #region HomePage
     [HttpGet]
     public IActionResult Index(int id)
     {
@@ -40,14 +40,7 @@ public class HomeController : BaseController<HomeController>
         //this will display the LoginPage.cshtml view
         return View();
     }
-
-    [HttpPost]
-    public IActionResult Index(string message, string recipientName)
-    {
-        // Here we will validate the login page "email & password" before showing customer's their Account Page
-        return View();
-    }
-
+    #endregion
 
     public IActionResult Privacy()
     {
