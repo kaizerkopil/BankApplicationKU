@@ -122,6 +122,7 @@ public class AccountController : BaseController<AccountController>
     [HttpPost]
     public IActionResult ManageMoney(string accountTypeSelected)
     {
+        ViewData.SetData("ActiveLink", "ManageMoney");
         int userId = _sessionManager.GetUserData().Id;
         string userFullName = _sessionManager.GetUserData().FullName!;
 

@@ -8,7 +8,7 @@
     var itemList = new SelectList(new string[]{ "Savings", "Debit" });
 }
 @using(Html.BeginForm("ShowTransactions", "Account", FormMethod.Post)){
-    <div class="container-fluid bg-warning">
+    <div class="container-fluid">
         <div class="container w-50 mt-lg-5 pt-lg-3 mt-3 mb-lg-3 mb-4 d-flex flex-column gap-2 align-items-center align-items-lg-start ms-lg-2 ps-0">
             <p class="mb-0"> Please select an account:</p>
             @Html.DropDownList("accountTypeSelected", @Model.AccountTypes, new { @class = "form-select" })
@@ -18,7 +18,7 @@
     </div>
 }
 @if(@Model.SelectedAccount != null){
-    <div class="container-fluid mb-3 pt-2 bg-success-subtle">
+    <div class="container-fluid mb-3 pt-2">
         <div class="container border border-1 border-black rounded-2 py-2 ps-3 w-50 ms-lg-2 w-50">
             <span class="mb-0 fs-6 fw-light">Account Details</span>
             <hr class="mt-1 mb-2">

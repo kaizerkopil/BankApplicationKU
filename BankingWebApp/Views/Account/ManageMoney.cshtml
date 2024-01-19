@@ -45,43 +45,56 @@
                     <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
                     <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="accountNo" />
 
-                    <div class="row input-group">
-                        <label class="form-label">Transfer Amount: </label><input class="form-control" type="number" min="0" max="1_000_000_000" name="depositAmount">
+                    <div class="input-group">
+                            <label class="col-12 col-xl-3 form-label">Transfer Amount: </label>
+                            <input class="form-control rounded-start-2" type="number" min="0" max="1_000_000_000" name="depositAmount">
                     </div>
-                    <button class="btn btn-success w-50 mt-3 mx-auto"
-                            type="submit">
-                        Confirm Transfer
-                    </button>
+                    <div class="d-inline-block mx-auto ms-lg-0">
+                        <button class="btn btn-success mt-3 mx-auto"
+                                type="submit">
+                            Confirm Transfer
+                        </button>
+                    </div>
                 </div>
             }
         </div>
         <div class="collapse ms-lg-2 ps-0" id="transferFundDetails">
             @using (Html.BeginForm("TransferMoney", "Account"))
             {
-                <div class="card card-body mt-4">
+                <div class="card card-body mt-4 gap-2">
                     <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
                     <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="senderAccountNo" />
-                    <div class="row input-group">
-                        <label class="form-label">First Name</label><input class="form-control" type="text" name="firstName">
+                    <div class="input-group">
+                        <label class="col-12 col-xl-3 form-label">First Name</label>
+                        <input class="form-control rounded-start-2" type="text" name="firstName">
                     </div>
-                    <div class="row input-group">
-                        <label class="form-label">Last Name: </label><input class="form-control" type="text" name="lastName">
+                    <div class="input-group">
+                        <label class="col-12 col-xl-3 form-label">Last Name: </label>
+                        <input class="form-control rounded-start-2" type="text" name="lastName">
                     </div>
-                    <div class="row input-group">
-                        <label class="form-label">Account No</label><input class="form-control" type="text" name="receiverAccountNo">
+                    <div class="input-group">
+                        <label class="col-12 col-xl-3 form-label">Account No</label>
+                        <input class="form-control rounded-start-2" type="text" name="receiverAccountNo">
                     </div>
-                    <div class="row input-group">
-                        <label class="form-label">Transfer Amount: </label><input class="form-control" type="number" min="0" max="1_000_000_000" name="transferAmount">
+                    <div class="input-group">
+                        <label class="col-12 col-xl-3 form-label">Transfer Amount: </label>
+                        <input class="form-control rounded-start-2" type="number" min="0" max="1_000_000_000" name="transferAmount">
                     </div>
-                    <button class="btn btn-success w-50 mt-3 mx-auto"
-                            type="submit">
-                        Confirm Transfer
-                    </button>
+                    <div class="d-inline-block mx-auto ms-lg-0">
+                        <button class="btn btn-success mt-3 mx-auto"
+                                type="submit">
+                            Confirm Transfer
+                        </button>
+                    </div>
                 </div>
             }
         </div>
         <div class="ms-lg-2 ps-0 mt-3">
-            <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"]">@ViewData["ResponseMessage"]</div>
+            <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"] alert-dismissible" role="alert">
+                <i class="bi bi-info-circle me-2"></i>@ViewData["ResponseMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert">
+                </button>
+            </div>
         </div>
     </div>
 } else
