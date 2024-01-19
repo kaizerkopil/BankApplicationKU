@@ -1,13 +1,14 @@
 ﻿@model AccountViewModel
 
 @{
-    ViewData["Title"] = "Manage Money";
+    ViewData["Title"] = "Manage Funds";
 }
 
-@using (Html.BeginForm("ManageMoney", "Account", FormMethod.Post))
+@using (Html.BeginForm("ManageFunds", "Account", FormMethod.Post))
 {
     <div class="container-fluid">
         <div class="container w-50 mt-lg-5 pt-lg-3 mt-3 mb-lg-3 mb-4 d-flex flex-column gap-2 align-items-center align-items-lg-start ms-lg-2 ps-0">
+            <h3>Manage your Funds</h3>
             <p class="mb-0"> Please select an account:</p>
             @Html.DropDownList("accountTypeSelected", @Model.AccountTypes, new { @class = "form-select" })
             <input type="hidden" value="" />
@@ -23,31 +24,57 @@
             <hr class="mt-1 mb-2">
             <div><span class="fs-6 fw-light">Account No:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountNo</span></div>
             <div><span class="fs-6 fw-light">Account Holder:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Customer!.FullName</span></div>
-            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Balance</span></div>
+            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">£@Model.SelectedAccount.Balance</span></div>
             <div><span class="fs-6 fw-light">Account Type:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountType</span></div>
         </div>
         @if (Model.SelectedAccount.AccountType == AccountTypeEnum.Savings)
         {
-            <div class="d-inline-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
+            <div class="d-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#withdrawFundDetails" asp-action="WithdrawMoney">Withdraw Funds</button>
             </div>
         } else if (Model.SelectedAccount.AccountType == AccountTypeEnum.Debit)
         {
-            <div class="d-inline-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
+            <div class="d-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
-                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#transferFundDetails" asp-action="TransferMoney">Transfer Funds</button>
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#withdrawFundDetails" asp-action="WithdrawMoney">Withdraw Funds</button>
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#transferFundDetails" asp-action="TransferMoney">Transfer Funds</button>  
             </div>
         }
         <div class="collapse ms-lg-2 ps-0" id="depositFundDetails">
             @using (Html.BeginForm("DepositMoney", "Account"))
             {
-                <div class="card card-body mt-4">
+                <div class="card card-body mt-4 gap-2">
+                    <label class="col-12 col-xl-3 fs-5 fw-bold">Deposit details</label>
+                    <hr class="mt-0 mb-1">
                     <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
                     <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="accountNo" />
 
                     <div class="input-group">
-                            <label class="col-12 col-xl-3 form-label">Transfer Amount: </label>
+                            <label class="col-12 col-xl-3 form-label">Deposit Amount: </label>
                             <input class="form-control rounded-start-2" type="number" min="0" max="1_000_000_000" name="depositAmount">
+                    </div>
+                    <div class="d-inline-block mx-auto ms-lg-0">
+                        <button class="btn btn-success mt-3 mx-auto"
+                                type="submit">
+                            Confirm Transfer
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="collapse ms-lg-2 ps-0" id="withdrawFundDetails">
+            @using (Html.BeginForm("WithdrawMoney", "Account"))
+            {
+                <div class="card card-body mt-4 gap-2">
+                    <label class="col-12 col-xl-3 fs-5 fw-bold">Withdraw details</label>
+                    <hr class="mt-0 mb-1">
+                    <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
+                    <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="accountNo" />
+
+                    <div class="input-group">
+                        <label class="col-12 col-xl-3 form-label">Withdraw Amount: </label>
+                        <input class="form-control rounded-start-2" type="number" min="0" max="1_000_000_000" name="withdrawAmount">
                     </div>
                     <div class="d-inline-block mx-auto ms-lg-0">
                         <button class="btn btn-success mt-3 mx-auto"
@@ -62,6 +89,8 @@
             @using (Html.BeginForm("TransferMoney", "Account"))
             {
                 <div class="card card-body mt-4 gap-2">
+                    <label class="col-12 col-xl-3 fs-5 fw-bold">Transfer details</label>
+                    <hr class="mt-0 mb-1">
                     <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
                     <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="senderAccountNo" />
                     <div class="input-group">

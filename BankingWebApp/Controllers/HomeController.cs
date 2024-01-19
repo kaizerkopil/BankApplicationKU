@@ -18,7 +18,7 @@ public class HomeController : BaseController<HomeController>
 
     #region HomePage
     [HttpGet]
-    public IActionResult Index(int id)
+    public IActionResult Index(int id, string responseMessage, string showMessage = "invisible")
     {
         if (id != 0)
         {
@@ -36,6 +36,9 @@ public class HomeController : BaseController<HomeController>
         //setting Customer FullName to footer anchor tag element innerText
         ViewData.SetData("CustomerFullName", userFullName!);
 
+        ViewData.SetData("ShowMessage", showMessage);
+        ViewData.SetData("ResponseMessage", responseMessage);
+
         _logger.LogInformation("User has successfully logged in");
         //this will display the LoginPage.cshtml view
         return View();
@@ -45,6 +48,8 @@ public class HomeController : BaseController<HomeController>
     public IActionResult Privacy()
     {
         ViewData.SetData("ActiveLink", "Privacy");
+        string userFullName = _sessionManager.GetUserData().FullName!;
+        ViewData.SetData("CustomerFullName", userFullName);
 
         return View();
     }

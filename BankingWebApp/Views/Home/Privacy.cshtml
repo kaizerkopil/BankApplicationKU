@@ -1,18 +1,172 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "FastBank Policy";
     Layout = "_Layout";
 }
 
 
-<div class="container row mx-auto pt-3">
-    <h1 class="border border-2 rounded-2 py-2 col-12 col-lg-8 col-xl-6">@ViewData["Title"]<i class="fas fa-search ms-2"></i></h1>
-    <p>Use this page to detail your site's privacy policy.</p>
+<div class="container row pt-3 mx-auto">
+    <h2 class="container py-2 col-12"><i class="fa fa-shield-halved me-2 fa-1x"></i>@ViewData["Title"]</h2>
+    <hr />
+    <span class="fs-3 mb-3 ms-2">Policy for Customers</span>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <!-- adding "collapsed" to the button removes the selected style -->
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                    Customer Policies
+                </button>
+            </h2>
+            <!-- removing "show" from the body div to hide the accordian-item body -->
+            <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>1. Respect and Courtesy:</strong><br />
 
-    <div class="row">
-        <div class="col-xl bg-warning-subtle">A</div>
-        <div class="col-xl bg-success-subtle">B</div>
+                    1.1. Treat our staff members, representatives, and other customers with respect and courtesy at all times. Discriminatory, offensive, or disrespectful behavior will not be tolerated.<br />
+
+                    1.2. Communicate with our staff in a professional and respectful manner, whether in person, over the phone, via email, or through other channels.<br />
+
+                    <br /><strong>
+                        2. Honest and Accurate Information:
+                    </strong><br />
+
+
+                    2.1. Provide honest and accurate information when making inquiries, requesting assistance, or making purchases.<br />
+
+                    2.2. Do not engage in deceptive, fraudulent, or malicious activities while interacting with our company.<br />
+
+                    <br /><strong>
+                        3. Privacy and Data Protection:
+                    </strong><br />
+
+                    3.1. Respect our privacy policies and the confidentiality of any personal information or data you may come across during your interactions with us.<br />
+
+                    3.2. Do not share sensitive or personal information of other customers without their consent.<br />
+
+                    <br /><strong>
+                        4. Payment and Financial Responsibility:
+                    </strong><br />
+
+                    4.1. Make payments in a timely manner and adhere to the agreed-upon terms and conditions for products/services, including payment schedules and amounts.<br />
+
+                    4.2. Report any billing discrepancies or concerns promptly to our customer support team.<br />
+
+                    <br /><strong>
+                        5. Feedback and Complaints:
+                    </strong><br />
+
+                    5.1. Provide constructive feedback and share any concerns or complaints with us through the designated customer feedback channels.<br />
+
+                    5.2. Refrain from using abusive language or making threats when addressing issues. We are committed to resolving problems in a professional and efficient manner.<br />
+
+                    <br /><strong>
+                        6. Respect for Policies and Regulations:
+                    </strong><br />
+
+                    6.1. Comply with all company policies, terms of service, and any applicable laws and regulations when using our products/services.<br />
+
+                    6.2. Adhere to any specific guidelines or rules provided for the use of our products/services.<br />
+
+                    <br /><strong>
+                        7. Responsible Use:
+                    </strong><br />
+
+                    7.1. Use our products/services responsibly and safely. Do not engage in any activities that may harm yourself, others, or our company's reputation.<br />
+
+                    7.2. Do not engage in spamming, phishing, hacking, or any malicious activities that may compromise our systems or the safety of other customers.<br />
+
+                    <br /><strong>
+                        8. Reporting Violations:
+                    </strong><br />
+
+                    8.1. Report any violations of this Customer Code of Conduct, any unethical behavior, or any breaches of security or privacy to our customer support team or designated authorities.<br />
+                </div>
+            </div>
+        </div>
     </div>
-    
+
+
+
+
+    <div class="py-3 ps-3">
+        <span class="fs-3">Policy for Employee</span>
+    </div>
+    <div class="accordion pb-4" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Respect, Courtesy, Confidentiality, and Privacy
+                </button>
+            </h2>
+            <!--add "show"" to the class below to keep it shown-->
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>1. Respect and Courtesy:</strong><br />
+                    1.1. Treat all colleagues, superiors, and subordinates with respect and courtesy, regardless of their position, background, or personal characteristics. <br />
+                    1.2. Avoid using offensive language, making derogatory comments, or engaging in discriminatory behavior. Discrimination or harassment of any form, including but not limited to race, gender, religion, sexual orientation, age, disability, or nationality, will not be tolerated.<br />
+                    1.3. Maintain professionalism in all communications, both in person and electronically, including emails, messages, and social media interactions.<br />
+
+                    <br /><strong>2. Confidentiality and Privacy:</strong><br />
+                    2.1. Safeguard sensitive company information and customer data. Do not disclose confidential or proprietary information to unauthorized individuals or use it for personal gain.<br />
+                    2.2. Respect the privacy of colleagues and refrain from discussing their personal matters without their consent.<br />
+                    2.3. Adhere to data protection regulations and company policies related to data security and privacy.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Punctuality, Attendance, and Workplace Safety
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>1. Punctuality and Attendance:</strong><br />
+                    1.1. Arrive at work on time and fulfill your work duties as scheduled.<br />
+                    1.2. Notify your supervisor promptly if you are unable to attend work or if you will be late due to unforeseen circumstances.<br />
+                    1.3. Use leave entitlements responsibly and obtain proper approvals for time off in accordance with company policies.<br />
+
+                    <br /><strong>2. Workplace Safety:</strong><br />
+                    2.1. Follow all safety protocols and guidelines to maintain a safe and healthy working environment.<br />
+                    2.2. Report any safety concerns or hazards to your supervisor or the appropriate department promptly.<br />
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Conflict Resolution and Professional Development
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>1. Conflict Resolution:</strong><br />
+                    1.1. Address conflicts or disagreements with colleagues in a respectful and constructive manner. Seek mediation or assistance from HR or management if necessary.<br />
+                    1.2. Do not engage in any form of physical or verbal aggression, intimidation, or retaliation.<br />
+
+                    <br /><strong>2. Professional Development:</strong><br />
+                    2.1. Strive for continuous improvement in your skills and knowledge relevant to your role.
+                    2.2. Actively participate in training and development opportunities provided by the company.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Dress Code and Company Resources
+                </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>1. Dress Code:</strong><br />
+                    1.1. Adhere to the company's dress code policy, if applicable, and maintain a professional appearance.<br />
+
+                    <br /><strong>2. Company Resources:</strong><br />
+                    2.1. Use company resources, including equipment, technology, and supplies, responsibly and only for authorized purposes.<br />
+                    2.2. Report any misuse or damage of company property promptly.<br />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

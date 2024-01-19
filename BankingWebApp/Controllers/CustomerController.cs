@@ -28,7 +28,7 @@ public class CustomerController : BaseController<CustomerController>
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult RegisterCustomer([Bind("FirstName", "LastName", "EmailAddress", "Password", "ConfirmPassword", "Phonenum", "StreetAddress", "PostCode", "City", "RegistrationDate")] Customer customer)
+    public IActionResult RegisterCustomer([Bind("FirstName", "LastName", "EmailAddress", "Password", "ConfirmPassword", "Phonenum", "StreetAddress", "PostCode", "City")] Customer customer)
     {
         var x = customer;
         if (!ModelState.IsValid)
@@ -44,6 +44,7 @@ public class CustomerController : BaseController<CustomerController>
             CustomerViewModel vm = new();
             vm.InvalidPropNames = invalidPropNames;
             vm.Customer = customer;
+            vm.Customer.RegistrationDate = DateTime.Now;
             return View(vm);
         }
 
@@ -82,12 +83,13 @@ public class CustomerController : BaseController<CustomerController>
     [ValidateAntiForgeryToken]
     public IActionResult OpenAccount([Bind("Balance")] Account account, string accountTypeSelected, decimal balance)
     {
-        var dbCust = _customerRepo.GetById(_sessionManager.GetUserData().Id);
+        var dbCust = _customerRepo.GetCustomersWithAccountsAndTransactions().FirstOrDefault(c => c.CustomerId == _sessionManager.GetUserData().Id);
         ViewData.SetData("CustomerFullName", _sessionManager.GetUserData().FullName!);
 
         var getEnumValue = Enum.Parse<AccountTypeEnum>(accountTypeSelected);
         account.AccountType = getEnumValue;
         account.Customer = dbCust;
+        string invalidMessage = "";
 
         List<SelectListItem> accountTypes = new List<SelectListItem>()
             {
@@ -97,13 +99,22 @@ public class CustomerController : BaseController<CustomerController>
         AccountViewModel accountVM = new AccountViewModel(dbCust, accountTypes);
         if (ModelState.IsValid)
         {
+            foreach (var custAccount in dbCust.Accounts!)
+            {
+                if (custAccount.AccountType == Enum.Parse<AccountTypeEnum>(accountTypeSelected))
+                {
+                    invalidMessage = $"You already have an existing {accountTypeSelected} account";
+                    ModelState.AddModelError("balanceInvalidMessage", invalidMessage);
+
+                    return View(account);
+                }
+            }
             //account.CustomerId = dbCust.CustomerId;
             _accountRepo.Insert(account);
             _accountRepo.Save();
             return RedirectToAction("Index", "Home");
         } else
         {
-            string invalidMessage = "";
             if (account.Balance < 0)
             {
                 invalidMessage = "Balance cannot be less than zero";

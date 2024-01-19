@@ -17,8 +17,8 @@
             </div>
             <div class="card-body">
                 <label class="mb-1">Enter your initial deposit: </label>
-                <input class="form-control" name="balance" type="number"/>
-                <p>@Html.ValidationMessage("balanceInvalidMessage")</p>
+                <input class="form-control" name="balance" type="number" value="0"/>
+                <p class="mt-2">@Html.ValidationMessage("balanceInvalidMessage")</p>
                 <div>@Html.DropDownList("accountTypeSelected", accountTypes, new {@class = "form-select"})</div>
             </div>
 

@@ -1,0 +1,55 @@
+﻿@model AccountViewModel
+
+@{
+    ViewData["Title"] = "Manage Profile";
+}
+
+
+<div class="container mt-4">
+    <h3>Profile: <span class="fs-3 fw-light">@(Model!.Customer!.FullName)</span></h3>
+
+    <div class="mt-2 mb-2 card p-2">
+        <p><b>First Name:</b> <span>@Model.Customer.FirstName</span></p>
+        <p><b>Last Name:</b> <span>@Model.Customer.LastName</span></p>
+        <p><b>Email:</b> <span>@Model.Customer.EmailAddress</span></p>
+        <p><b>Password:</b> <span>@Model.Customer.Password</span></p>
+        <p><b>Phone number:</b> <span>@Model.Customer.Phonenum</span></p>
+        <p><b>Date registered:</b> <span>@Model.Customer.RegistrationDate</span></p>
+        <div>
+            <span class="fs-5 fw-light">Address Details: </span>
+            <hr class="mt-2">
+            <p><b>Street Address:</b> <span>@Model.Customer.StreetAddress</span></p>
+            <p><b>City:</b> <span>@Model.Customer.City</span></p>
+            <p><b>Post code:</b> <span>@Model.Customer.PostCode</span></p>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId">Open an Account</a>
+    </div>
+    <div class="pt-2">
+        <h5 class="mt-2">You have the following Accounts: </h5>
+        @if(Model.Accounts!.Count > 0){
+            @foreach(var account in Model.Accounts!)
+            {
+                <div class="d-inline-block border border-1 p-3 gap-1 mx-auto">
+                    <p><span class="fw-semibold">Account Type: </span><span>@account.AccountType</span></p>
+                    <p><span class="fw-semibold">Account No: </span><span>@account.AccountNo</span></p>
+                    <p><span class="fw-semibold">Current Balance: </span><span>£@account.Balance</span></p>
+                    <a class="btn btn-danger d-inline-block" asp-action="DeleteAccount" asp-route-accountId="@account.AccountId">
+                        Delete Account
+                    </a>
+                </div>
+            }
+        } else
+        {
+            <div>
+                <p>You do not have any account opened with us</p>
+            </div>
+        }
+        <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"] alert-dismissible" role="alert">
+                <i class="bi bi-info-circle me-2"></i>@ViewData["ResponseMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert">
+                </button>
+            </div>
+    </div>
+</div>

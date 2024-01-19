@@ -68,19 +68,35 @@ public class Account
         this.Balance -= amount;
         receiver.Balance += amount;
 
-        return new Transaction(this, receiver, amount);
+        return new Transaction(this, receiver, amount, DateTime.Now);
     }
 
-    public void DepositMoney(decimal amount)
+    public Transaction DepositMoney(decimal depositAmount)
     {
-        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "Deposit amount cannot be less than or equal to zero");
+        if (depositAmount <= 0) throw new ArgumentOutOfRangeException(nameof(depositAmount), "Deposit amount cannot be less than or equal to zero");
 
-        if (amount + this.Balance >= 1_000_000_000)
+        if (depositAmount + this.Balance >= 1_000_000_000)
         {
-            throw new ArgumentOutOfRangeException(nameof(amount), "The deposit amount added to your available balance exceeds the maximum deposit limit");
+            throw new ArgumentOutOfRangeException(nameof(depositAmount), "The deposit amount added to your available balance exceeds the maximum deposit limit");
         }
 
-        this.Balance += amount;
+        this.Balance += depositAmount;
+
+        return new Transaction(this, depositAmount, DateTime.Now);
+    }
+
+    public Transaction WithdrawMoney(decimal withdrawAmount)
+    {
+        if (withdrawAmount <= 0) throw new ArgumentOutOfRangeException(nameof(withdrawAmount), "Withdrawal amount cannot be less than or equal to zero");
+
+        if (withdrawAmount > this.Balance)
+        {
+            throw new ArgumentOutOfRangeException(nameof(withdrawAmount), "The withdraw amount cannot exceed your available balance");
+        }
+
+        this.Balance -= withdrawAmount;
+
+        return new Transaction(this, withdrawAmount, DateTime.Now, true);
     }
 
     public Transaction TransferMoney(int transactionId, Account receiver, decimal amount)
@@ -99,4 +115,6 @@ public class Account
 
         return new Transaction(transactionId, this.AccountId, receiver.AccountId, amount, DateTime.Now);
     }
+
+
 }

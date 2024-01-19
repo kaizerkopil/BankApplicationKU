@@ -30,12 +30,17 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link @(ViewData["ActiveLink"] as string == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">
-                                Home
+                                Locate Bank Branches
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(ViewData["ActiveLink"] as string == "ManageMoney" ? "active" : "")" asp-controller="Account" asp-action="ManageMoney">
-                                Manage Money
+                            <a class="nav-link @(ViewData["ActiveLink"] as string == "ManageProfile" ? "active" : "")" asp-controller="Account" asp-action="ManageProfile">
+                                Manage Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewData["ActiveLink"] as string == "ManageFunds" ? "active" : "")" asp-controller="Account" asp-action="ManageFunds">
+                                Manage Funds
                             </a>
                         </li>
                         <li class="nav-item">
@@ -45,23 +50,19 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @(ViewData["ActiveLink"] as string == "Privacy" ? "active" : "")" asp-controller="Home" asp-action="Privacy">
-                                Privacy
+                              Privacy and Policies
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="LoginPage" asp-controller="Customer">
-                                Sign out
-                            </a>
-                        </li>
- 
+
                         <li class="nav-item dropdown">
                             <a href="#" class="text-black nav-link d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle me-2 fs-4"></i>                                
                                 <strong>@(ViewData["CustomerFullName"] as string)</strong>
                             </a>
                             <ul class="dropdown-menu text-small shadow w-25">
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li><a class="dropdown-item" asp-action="LoginPage" asp-controller="Customer">Sign Out</a></li>
+                                <li><a class="dropdown-item text-body-emphasis" href="#">Profile</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-body-emphasis" asp-action="LoginPage" asp-controller="Customer">Sign Out</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -83,12 +84,17 @@
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Index" class="nav-link link-body-emphasis @(ViewData["ActiveLink"] as string == "Home" ? "active" : "")">
-                        Home
+                        Locate Bank Branches
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @(ViewData["ActiveLink"] as string == "ManageMoney" ? "active" : "") link-body-emphasis" asp-controller="Account" asp-action="ManageMoney">
-                        Manage Money
+                    <a class="nav-link link-body-emphasis @(ViewData["ActiveLink"] as string == "ManageProfile" ? "active" : "")" asp-controller="Account" asp-action="ManageProfile">
+                        Manage Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewData["ActiveLink"] as string == "ManageFunds" ? "active" : "") link-body-emphasis" asp-controller="Account" asp-action="ManageFunds">
+                        Manage Funds
                     </a>
                 </li>
                 <li class="nav-item">
@@ -98,7 +104,7 @@
                 </li>
                 <li class="nav-item">
                     <a asp-controller="Home" asp-action="Privacy" class="nav-link link-body-emphasis @(ViewData["ActiveLink"] as string == "Privacy" ? "active" : "")">
-                        Privacy
+                        Privacy and Policies
                     </a>
                 </li>
             </ul>
@@ -111,9 +117,9 @@
                     <strong>@(ViewData["CustomerFullName"] as string)</strong>
                 </a>
                 <ul class="dropdown-menu text-small shadow">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item text-body-emphasis" href="#">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" asp-action="LoginPage" asp-controller="Customer">Sign out</a></li>
+                    <li><a class="dropdown-item text-body-emphasis" asp-action="LoginPage" asp-controller="Customer">Sign out</a></li>
                 </ul>
             </div>
             <!-- #endregion SideBar Footer-->

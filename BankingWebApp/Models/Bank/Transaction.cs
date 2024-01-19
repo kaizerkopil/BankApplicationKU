@@ -24,18 +24,37 @@ public class Transaction
 
     public Account? Receiver { get; set; }
 
+
     public Transaction()
     {
 
     }
 
-    public Transaction(Account sender, Account receiver, decimal amount)
+
+    //Performing Deposit transaction
+    public Transaction(Account accountHolder, decimal amount, DateTime transactionDate, bool isWithdrawal = false)
+    {
+        if (isWithdrawal)
+        {
+            Sender = accountHolder;
+        } else
+        {
+            Receiver = accountHolder;
+        }
+        Amount = amount;
+        TransactionDate = transactionDate;
+    }
+
+    //Used for Transfer Money transaction
+    public Transaction(Account sender, Account receiver, decimal amount, DateTime transactionDate)
     {
         Sender = sender;
         Receiver = receiver;
         Amount = amount;
+        TransactionDate = transactionDate;
     }
 
+    //this constructor is used for seeding data
     public Transaction(int transactionId, int senderAccountId, int receiverAccountId, decimal amount, DateTime transactionDate)
     {
         TransactionId = transactionId;

@@ -7,6 +7,9 @@ namespace BankingWebApp.ViewModels
         public Customer? Customer { get; set; }
         public List<SelectListItem>? AccountTypes { get; set; }
         public Account? SelectedAccount { get; set; }
+
+        public List<Account>? Accounts { get; set; }
+
         public List<Transaction>? Transactions { get; set; }
 
         public AccountViewModel()
