@@ -23,7 +23,7 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.AddBankAppServices();
 
-GlobalDiagnosticsContext.Set("configDir", "C:\\Users\\kopil\\OneDrive\\Documents\\KU_University_Documents\\SAPM_Final_Project\\BankingWebApp\\BankingWebApp");
+GlobalDiagnosticsContext.Set("appDirectory", builder.Configuration.GetValue<string>("ApplicationPath"));
 GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
 var app = builder.Build();
@@ -48,7 +48,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Customer}/{action=LoginPage}/{id?}");
+    pattern: "{controller=Customer}/{action=RegisterCustomer}/{id?}");
 
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();

@@ -15,7 +15,8 @@ public static class SeedDataExtension
             Phonenum = "07705089501",
             EmailAddress = "john.gerrad@gmail.com",
             Password = "1111",
-            Accounts = new() { }
+            Accounts = new() { },
+            RegistrationDate = DateTime.Now
         };
 
         var firstCustAcc = new Account(1, 1, 50_000.00m, AccountTypeEnum.Savings);
@@ -30,7 +31,8 @@ public static class SeedDataExtension
             Phonenum = "07755589511",
             EmailAddress = "pattrick.george@outlook.com",
             Password = "2222",
-            Accounts = new() { }
+            Accounts = new() { },
+            RegistrationDate = DateTime.Now
         };
 
         var secondCustAcc = new Account(2, 2, 100_000.00m, AccountTypeEnum.Debit);
@@ -44,7 +46,8 @@ public static class SeedDataExtension
             Phonenum = "07712312355",
             EmailAddress = "lilliana.bestie@hotmail.com",
             Password = "3333",
-            Accounts = new() { }
+            Accounts = new() { },
+            RegistrationDate = DateTime.Now
         };
 
         var thirdCustAcc = new Account(3, 3, 150_000.00m, AccountTypeEnum.Debit);

@@ -1,7 +1,5 @@
 using BankingWebApp.Base;
 using BankingWebApp.Settings;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
@@ -10,12 +8,10 @@ namespace BankingWebApp.Controllers;
 public class HomeController : BaseController<HomeController>
 {
     private CustomerRepository _repo;
-    private IOptions<CurrentUser> _user;
     private readonly ISessionManager _sessionManager;
 
-    public HomeController(ILogger<HomeController> logger, CustomerRepository repo, IOptions<CurrentUser> user, ISessionManager sessionManager) : base(logger)
+    public HomeController(ILogger<HomeController> logger, CustomerRepository repo, ISessionManager sessionManager) : base(logger)
     {
-        _user = user;
         _sessionManager = sessionManager;
         _repo = repo;
     }

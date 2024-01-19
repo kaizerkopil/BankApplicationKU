@@ -1,0 +1,25 @@
+﻿@model Customer
+@{
+
+
+}
+
+@using (Html.BeginForm())
+{
+    <div class="container mt-5 pt-4">
+        <div class="card">
+            <div class="card-header">
+                Opening Account
+            </div>
+
+            <div class="card-body">
+                <div class="">@Html.DisplayFor(m => m.FullName)</div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+}
+

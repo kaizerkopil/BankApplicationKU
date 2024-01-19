@@ -10,13 +10,11 @@ namespace BankingWebApp.Controllers;
 public class AccountController : BaseController<AccountController>
 {
     private AccountRepository _repo;
-    private IOptions<CurrentUser> _user;
     private readonly ISessionManager _sessionManager;
 
-    public AccountController(ILogger<AccountController> logger, AccountRepository repo, IOptions<CurrentUser> user, ISessionManager sessionManager) : base(logger)
+    public AccountController(ILogger<AccountController> logger, AccountRepository repo, ISessionManager sessionManager) : base(logger)
     {
         _repo = repo;
-        _user = user;
         _sessionManager = sessionManager;
     }
 

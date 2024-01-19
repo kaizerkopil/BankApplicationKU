@@ -16,12 +16,12 @@ public class Customer
 
     [Display(Name = "Email")]
     [Required(ErrorMessage = "Email cannot be empty")]
-    [MaxLength(50, ErrorMessage = "Email cannot exceed 25 characters")]
+    [MaxLength(50, ErrorMessage = "Email cannot exceed 50 characters")]
     public string? EmailAddress { get; set; }
 
     [Display(Name = "Password")]
     [Required(ErrorMessage = "Password cannot be empty")]
-    [MaxLength(50, ErrorMessage = "Password cannot exceed 20 characters")]
+    [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? Password { get; set; }
 
     [Display(Name = "Phone number")]
@@ -37,12 +37,14 @@ public class Customer
     public string? City { get; set; }
 
     [Display(Name = "Date Registered")]
-    public DateTime RegistrationDate { get => DateTime.Now; }
+    public DateTime RegistrationDate { get; set; }
 
     public List<Account>? Accounts { get; set; } = new();
 
     [NotMapped]
-    [Compare(nameof(Password))]
+    [Compare(nameof(Password), ErrorMessage = "The passwords both needs to match")]
+    [Required(ErrorMessage = "Confirm Password cannot be empty")]
+    [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? ConfirmPassword { get; set; }
 
     [NotMapped]
@@ -57,7 +59,7 @@ public class Customer
 
     }
 
-    public Customer(string? firstName, string? lastName, string? emailAddress, string? phonenum, string? streetAddress, string? postCode, string? city)
+    public Customer(string? firstName, string? lastName, string? emailAddress, string? phonenum, string? streetAddress, string? postCode, string? city, DateTime registrationDate)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -66,5 +68,6 @@ public class Customer
         StreetAddress = streetAddress;
         PostCode = postCode;
         City = city;
+        RegistrationDate = registrationDate;
     }
 }

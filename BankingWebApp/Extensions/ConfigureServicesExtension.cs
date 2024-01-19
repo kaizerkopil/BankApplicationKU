@@ -42,9 +42,6 @@ public static class ConfigureServicesExtension
         services.Configure<CustomerDetailsSetting>(builder.Configuration.GetRequiredSection("CustomerDetails"));
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<CustomerDetailsSetting>>().Value);
 
-        services.Configure<CurrentUser>(builder.Configuration.GetRequiredSection("CurrentUser"));
-        services.AddSingleton(sp => sp.GetRequiredService<IOptions<CurrentUser>>().Value);
-
         return services;
     }
 

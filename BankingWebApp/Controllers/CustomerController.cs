@@ -1,5 +1,7 @@
 ﻿using BankingWebApp.Base;
+using BankingWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace BankingWebApp.Controllers;
 
@@ -13,23 +15,50 @@ public class CustomerController : BaseController<CustomerController>
         _sessionManager = sessionManager;
     }
 
-    //[Bind("FirstName", "LastName")] 
-    public IActionResult RegisterCustomer(Customer customer, float floatVal, int intVal)
+    [HttpGet]
+    public IActionResult RegisterCustomer()
     {
-        var customers = _repo.GetCustomersWithAccountsAndTransactions();
-        return View();
+        return View(new CustomerViewModel());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult RegisterCustomerPost(Customer customer)
+    public IActionResult RegisterCustomer([Bind("FirstName", "LastName", "EmailAddress", "Password", "ConfirmPassword", "Phonenum", "StreetAddress", "PostCode", "City", "RegistrationDate")] Customer customer)
     {
-        if (ModelState.IsValid)
+        var x = customer;
+        if (!ModelState.IsValid)
         {
+            List<string> invalidPropNames = new();
 
+            foreach (var modelStateEntry in ModelState)
+            {
+                if (modelStateEntry.Value.ValidationState == ModelValidationState.Invalid)
+                    invalidPropNames.Add(modelStateEntry.Key.Replace("customer.", ""));
+            }
+
+            CustomerViewModel vm = new();
+            vm.InvalidPropNames = invalidPropNames;
+            vm.Customer = customer;
+            return View(vm);
         }
 
-        return View(customer);
+        var fetchCustEmail = _repo.GetCustomerByEmail(customer.EmailAddress!);
+
+
+        if (fetchCustEmail != null)
+        {
+            CustomerViewModel vm = new();
+            vm.InvalidPropNames!.Add("EmailAddress");
+            ModelState.AddModelError("customer.EmailAddress", "Email Address already exists. Please choose another Email address");
+            return View(vm);
+        } else
+        {
+            _logger.LogInformation($"Email not found. So, registering customer with email: {customer.EmailAddress}");
+            _repo.Insert(customer);
+            _repo.Save();
+            var fetchCust = _repo.GetCustomerByEmail(customer.EmailAddress!);
+            return RedirectToAction(nameof(OpenAccount), new { id = fetchCust.CustomerId });
+        }
     }
 
     #region CustomerController: LoginPage
@@ -65,15 +94,18 @@ public class CustomerController : BaseController<CustomerController>
     #endregion
 
     [HttpGet]
-    public IActionResult LoginCustomer()
+    public IActionResult OpenAccount(int id)
     {
-        return View();
+        var customer = _repo.GetById(id);
+
+        return View(customer);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult LoginCustomer([Bind("EmailAddress", "Password")] Customer customer)
+    public IActionResult OpenAccount(Account account)
     {
+
         return View();
     }
 }
