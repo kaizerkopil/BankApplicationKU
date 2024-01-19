@@ -31,6 +31,8 @@ Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.co
    	- Microsoft.EntityFrameworkCore.Design 8.0.0
   
 1. [AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1](https://github.com/AutoMapper/AutoMapper.Extensions.Microsoft.DependencyInjection)
+   
+1. [Google Map JavaScript API -Application Programming Interface](https://developers.google.com/maps/documentation/javascript/overview)
 
 1. [Bootstrap 5.3.2: includes CSS3, HTML5, JavaScript ES13 (ECMAScript 13th Edition), PopperJS 1.16.1](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
@@ -38,3 +40,14 @@ Microsoft Documentation Link: [Entity Framework Core](https://learn.microsoft.co
 1. [JQuery 3.7.1](https://api.jquery.com/)
 
 1. [X.PagedList.Mvc.Core 8.4.7](https://github.com/dncuug/X.PagedList), Successor of [PagedList](https://github.com/troygoode/PagedList)
+***
+Instructions to make sure Applicaiton runs on your device:
+
+* open "Package Manager Console" in "Microsoft Visual Studio"
+
+* Run the command "update-database" - this will create the .mdf database for Microsoft SQL Server database in the following directory "C:\Users\[userName]\K2360182_FastBankApp.mdf" 
+
+* Please ensure you have this database created in the above directory mentioned
+
+if you have any questions please send me an email on: k2360182@kingston.ac.uk 
+***
