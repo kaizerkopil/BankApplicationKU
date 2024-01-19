@@ -23,7 +23,7 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.AddBankAppServices();
 
-GlobalDiagnosticsContext.Set("appDirectory", builder.Configuration.GetValue<string>("ApplicationPath"));
+GlobalDiagnosticsContext.Set("appDirectory", AppContext.BaseDirectory);
 GlobalDiagnosticsContext.Set("connectionString", builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
 var app = builder.Build();
