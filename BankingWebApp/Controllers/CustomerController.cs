@@ -2,16 +2,20 @@
 using BankingWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankingWebApp.Controllers;
 
 public class CustomerController : BaseController<CustomerController>
 {
-    private CustomerRepository _repo;
+    private CustomerRepository _customerRepo;
+    private AccountRepository _accountRepo;
+
     private ISessionManager _sessionManager;
-    public CustomerController(ILogger<CustomerController> logger, CustomerRepository repo, ISessionManager sessionManager) : base(logger)
+    public CustomerController(ILogger<CustomerController> logger, CustomerRepository customerRepo, AccountRepository accountRepo, ISessionManager sessionManager) : base(logger)
     {
-        _repo = repo;
+        _customerRepo = customerRepo;
+        _accountRepo = accountRepo;
         _sessionManager = sessionManager;
     }
 
@@ -43,41 +47,74 @@ public class CustomerController : BaseController<CustomerController>
             return View(vm);
         }
 
-        var fetchCustEmail = _repo.GetCustomerByEmail(customer.EmailAddress!);
+        var fetchCustEmail = _customerRepo.GetCustomerByEmail(customer.EmailAddress!);
 
 
         if (fetchCustEmail != null)
         {
             CustomerViewModel vm = new();
             vm.InvalidPropNames!.Add("EmailAddress");
-            ModelState.AddModelError("customer.EmailAddress", "Email Address already exists. Please choose another Email address");
+            ModelState.AddModelError("customer.EmailAddress", "Email already exists. Please choose a different Email");
             return View(vm);
         } else
         {
             _logger.LogInformation($"Email not found. So, registering customer with email: {customer.EmailAddress}");
-            _repo.Insert(customer);
-            _repo.Save();
-            var fetchCust = _repo.GetCustomerByEmail(customer.EmailAddress!);
-            return RedirectToAction("OpenAccount", "Account", new { id = fetchCust.CustomerId });
+            _customerRepo.Insert(customer);
+            _customerRepo.Save();
+            var fetchCust = _customerRepo.GetCustomerByEmail(customer.EmailAddress!);
+            return RedirectToAction("OpenAccount", new { id = fetchCust.CustomerId });
         }
     }
     #endregion
 
     #region OpenAccount
+
     [HttpGet]
     public IActionResult OpenAccount(int id)
     {
-        var customer = _repo.GetById(id);
-
-        return View(customer);
+        var customer = _customerRepo.GetById(id);
+        _sessionManager.SetUserData(new() { Id = customer.CustomerId, FullName = customer.FullName });
+        ViewData.SetData("CustomerFullName", _sessionManager.GetUserData().FullName!);
+        return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult OpenAccount(Account account)
+    public IActionResult OpenAccount([Bind("Balance")] Account account, string accountTypeSelected, decimal balance)
     {
+        var dbCust = _customerRepo.GetById(_sessionManager.GetUserData().Id);
+        ViewData.SetData("CustomerFullName", _sessionManager.GetUserData().FullName!);
 
-        return View();
+        var getEnumValue = Enum.Parse<AccountTypeEnum>(accountTypeSelected);
+        account.AccountType = getEnumValue;
+        account.Customer = dbCust;
+
+        List<SelectListItem> accountTypes = new List<SelectListItem>()
+            {
+                new("Savings", "Savings", selected: true),
+                new("Debit", "Debit")
+            };
+        AccountViewModel accountVM = new AccountViewModel(dbCust, accountTypes);
+        if (ModelState.IsValid)
+        {
+            //account.CustomerId = dbCust.CustomerId;
+            _accountRepo.Insert(account);
+            _accountRepo.Save();
+            return RedirectToAction("Index", "Home");
+        } else
+        {
+            string invalidMessage = "";
+            if (account.Balance < 0)
+            {
+                invalidMessage = "Balance cannot be less than zero";
+            } else if (account.Balance > 1_000_000_000)
+            {
+                invalidMessage = "You cannot deposit more than £1,000,000,000 billion pounds";
+            }
+            ModelState.AddModelError("balanceInvalidMessage", invalidMessage);
+
+            return View(account);
+        }
     }
     #endregion
 
@@ -103,7 +140,7 @@ public class CustomerController : BaseController<CustomerController>
 
         try
         {
-            var custDb = _repo.GetCustomerByEmailAndPassword(cust.EmailAddress!, cust.Password!);
+            var custDb = _customerRepo.GetCustomerByEmailAndPassword(cust.EmailAddress!, cust.Password!);
             return RedirectToAction("Index", "Home", new { id = custDb.CustomerId });
         } catch (Exception)
         {

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Security.Cryptography.Xml;
 namespace BankingWebApp.Models.Bank;
 
 [PrimaryKey(nameof(AccountId))]
@@ -10,7 +11,7 @@ public class Account
     public string AccountNo { get => CreateAccountNumber(); }
 
     [Precision(15, 3)]
-    [Range(0, 1_000_000_000_000)]
+    [Range(0, 1_000_000_000)]
     public decimal Balance { get; set; }
     public int CustomerId { get; set; }
     public Customer? Customer { get; set; }
@@ -60,14 +61,26 @@ public class Account
             throw new ArgumentNullException(nameof(receiver));
         }
 
-        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "Amount cannot be less than or equal to zero");
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "Transfer amount cannot be less than or equal to zero");
 
-        if (amount > Balance) throw new ArgumentOutOfRangeException(nameof(amount), $"The amount ${amount} exceeds the current balance");
+        if (amount > Balance) throw new ArgumentOutOfRangeException(nameof(amount), $"The transfer amount ${amount} exceeds the current balance");
 
         this.Balance -= amount;
         receiver.Balance += amount;
 
         return new Transaction(this, receiver, amount);
+    }
+
+    public void DepositMoney(decimal amount)
+    {
+        if (amount <= 0) throw new ArgumentOutOfRangeException(nameof(amount), "Deposit amount cannot be less than or equal to zero");
+
+        if (amount + this.Balance >= 1_000_000_000)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amount), "The deposit amount added to your available balance exceeds the maximum deposit limit");
+        }
+
+        this.Balance += amount;
     }
 
     public Transaction TransferMoney(int transactionId, Account receiver, decimal amount)

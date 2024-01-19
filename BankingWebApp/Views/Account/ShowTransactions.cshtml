@@ -8,17 +8,17 @@
     var itemList = new SelectList(new string[]{ "Savings", "Debit" });
 }
 @using(Html.BeginForm("ShowTransactions", "Account", FormMethod.Post)){
-    <div class="container-fluid">
+    <div class="container-fluid bg-warning">
         <div class="container w-50 mt-lg-5 pt-lg-3 mt-3 mb-lg-3 mb-4 d-flex flex-column gap-2 align-items-center align-items-lg-start ms-lg-2 ps-0">
             <p class="mb-0"> Please select an account:</p>
             @Html.DropDownList("accountTypeSelected", @Model.AccountTypes, new { @class = "form-select" })
             <input type="hidden" value=""/>
-            <button class="btn btn-success w-25 mt-2" type="submit">Select</button>
+            <button class="btn btn-success mt-2" type="submit">Select</button>
         </div>
     </div>
 }
 @if(@Model.SelectedAccount != null){
-    <div class="container-fluid pt-2">
+    <div class="container-fluid mb-3 pt-2 bg-success-subtle">
         <div class="container border border-1 border-black rounded-2 py-2 ps-3 w-50 ms-lg-2 w-50">
             <span class="mb-0 fs-6 fw-light">Account Details</span>
             <hr class="mt-1 mb-2">
@@ -27,7 +27,7 @@
             <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Balance</span></div>
             <div><span class="fs-6 fw-light">Account Type:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountType</span></div>
         </div>
-        <div class="container py-2 ps-0 mb-3 w-50 ms-lg-2 w-100">
+        <div class="container py-2 ps-0 ms-lg-2  w-100">
             <hr class="mb-2 mt-4" />
             <h3 class="fw-light ps-2">List of Transactions:</h3>
             <hr class="mt-2"/>
@@ -40,7 +40,6 @@
                             <th>@Html.DisplayNameFor(m => m.Transactions[0].Amount)</th>
                             <th>@Html.DisplayName("Received From")</th>
                             <th>@Html.DisplayName("Sent To")</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +77,7 @@
     </div>
 } else
 {
-    <div class="container text-center text-lg-start my-auto ms-lg-0 ps-lg-4">
+    <div class="container text-center text-lg-start ms-lg-0 ps-lg-4 bg-info-subtle">
         <div>
         <span class="fs-5"><i class="bi bi-info-circle-fill me-2"></i>First select one of your available Account</span>
         </div>

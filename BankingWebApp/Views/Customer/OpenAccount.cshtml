@@ -1,23 +1,29 @@
-﻿@model Customer
+﻿@model Account
 @{
 
-
+    List<SelectListItem> accountTypes = new()
+    {
+           new SelectListItem("Savings", "Savings"),
+           new SelectListItem("Debit", "Debit")
+    };
 }
 
 @using (Html.BeginForm())
 {
     <div class="container mt-5 pt-4">
         <div class="card">
-            <div class="card-header">
-                Opening Account
+            <div class="card-header fw-light fs-4">
+                Opening Account for <span class="text-capitalize fw-semibold fs-3">@ViewData["CustomerFullName"]</span>
             </div>
-
             <div class="card-body">
-                <div class="">@Html.DisplayFor(m => m.FullName)</div>
+                <label class="mb-1">Enter your initial deposit: </label>
+                <input class="form-control" name="balance" type="number"/>
+                <p>@Html.ValidationMessage("balanceInvalidMessage")</p>
+                <div>@Html.DropDownList("accountTypeSelected", accountTypes, new {@class = "form-select"})</div>
             </div>
 
             <div class="card-footer">
-                <button type="submit">Submit</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </div>
     </div>

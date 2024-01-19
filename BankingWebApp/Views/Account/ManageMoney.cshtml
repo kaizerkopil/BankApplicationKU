@@ -1,0 +1,99 @@
+﻿@model AccountViewModel
+
+@{
+    ViewData["Title"] = "Manage Money";
+}
+
+@using (Html.BeginForm("ManageMoney", "Account", FormMethod.Post))
+{
+    <div class="container-fluid">
+        <div class="container w-50 mt-lg-5 pt-lg-3 mt-3 mb-lg-3 mb-4 d-flex flex-column gap-2 align-items-center align-items-lg-start ms-lg-2 ps-0">
+            <p class="mb-0"> Please select an account:</p>
+            @Html.DropDownList("accountTypeSelected", @Model.AccountTypes, new { @class = "form-select" })
+            <input type="hidden" value="" />
+            <button class="btn btn-success mt-2" type="submit">Select</button>
+        </div>
+    </div>
+}
+@if (@Model.SelectedAccount != null)
+{
+    <div class="container-fluid mb-3 pt-2">
+        <div class="container border border-1 border-black rounded-2 py-2 ps-3 w-50 ms-lg-2">
+            <span class="mb-0 fs-6 fw-light">Account Details</span>
+            <hr class="mt-1 mb-2">
+            <div><span class="fs-6 fw-light">Account No:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountNo</span></div>
+            <div><span class="fs-6 fw-light">Account Holder:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Customer!.FullName</span></div>
+            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Balance</span></div>
+            <div><span class="fs-6 fw-light">Account Type:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountType</span></div>
+        </div>
+        @if (Model.SelectedAccount.AccountType == AccountTypeEnum.Savings)
+        {
+            <div class="d-inline-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
+            </div>
+        } else if (Model.SelectedAccount.AccountType == AccountTypeEnum.Debit)
+        {
+            <div class="d-inline-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#transferFundDetails" asp-action="TransferMoney">Transfer Funds</button>
+            </div>
+        }
+        <div class="collapse ms-lg-2 ps-0" id="depositFundDetails">
+            @using (Html.BeginForm("DepositMoney", "Account"))
+            {
+                <div class="card card-body mt-4">
+                    <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
+                    <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="accountNo" />
+
+                    <div class="row input-group">
+                        <label class="form-label">Transfer Amount: </label><input class="form-control" type="number" min="0" max="1_000_000_000" name="depositAmount">
+                    </div>
+                    <button class="btn btn-success w-50 mt-3 mx-auto"
+                            type="submit">
+                        Confirm Transfer
+                    </button>
+                </div>
+            }
+        </div>
+        <div class="collapse ms-lg-2 ps-0" id="transferFundDetails">
+            @using (Html.BeginForm("TransferMoney", "Account"))
+            {
+                <div class="card card-body mt-4">
+                    <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
+                    <input type="hidden" value="@Model.SelectedAccount.AccountNo" name="senderAccountNo" />
+                    <div class="row input-group">
+                        <label class="form-label">First Name</label><input class="form-control" type="text" name="firstName">
+                    </div>
+                    <div class="row input-group">
+                        <label class="form-label">Last Name: </label><input class="form-control" type="text" name="lastName">
+                    </div>
+                    <div class="row input-group">
+                        <label class="form-label">Account No</label><input class="form-control" type="text" name="receiverAccountNo">
+                    </div>
+                    <div class="row input-group">
+                        <label class="form-label">Transfer Amount: </label><input class="form-control" type="number" min="0" max="1_000_000_000" name="transferAmount">
+                    </div>
+                    <button class="btn btn-success w-50 mt-3 mx-auto"
+                            type="submit">
+                        Confirm Transfer
+                    </button>
+                </div>
+            }
+        </div>
+        <div class="ms-lg-2 ps-0 mt-3">
+            <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"]">@ViewData["ResponseMessage"]</div>
+        </div>
+    </div>
+} else
+{
+    <div class="container text-center text-lg-start my-auto ms-lg-0 ps-lg-4">
+        <div>
+            <span class="fs-5"><i class="bi bi-info-circle-fill me-2"></i>First select one of your available Account</span>
+        </div>
+        <div>
+            <span class="fs-5"><i class="bi bi-info-circle-fill me-2"></i>Then Click on "Select"</span>
+        </div>
+    </div>
+}
+
+

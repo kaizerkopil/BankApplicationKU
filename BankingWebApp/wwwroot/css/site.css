@@ -9,30 +9,27 @@ html {
     }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, 
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
 .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-    position: relative;
-    min-height: 100%;
+
 }
 
 body {
-    min-height: 100vh;
-
+    overflow-x:hidden;
+    overflow-y:scroll;
 }
 
 #renderBody {
-    margin-left:300px;
+    width: 100vw;
+    overflow-y: scroll;
 }
-
-/**/
 
 #sideBarDiv {
     height: 100vh;
-    overflow-x: hidden;
     overflow-y: hidden;
 }
 
@@ -47,7 +44,7 @@ body {
 }
 
 .scrollarea {
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .navbar a {
@@ -63,6 +60,6 @@ body {
 /**/
 @media screen and (max-width: 991px) {
     #renderBody {
-        margin-left: 0px;
+        /*margin-left: 0px;*/
     }
 }
