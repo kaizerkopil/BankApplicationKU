@@ -19,26 +19,26 @@ Module Code: C17250
 
 1. Run the "BankingWebApp.sln" in "BankingWebApp" folder. After the project has been loaded successfully please follow the following instructions.
 
-1. Make sure you are connected to the internet
+2. Make sure you are connected to the internet
 
 **Creating the database is mandatory**
 Follow the following steps on creating the database:
 
-1. MenuBar at top -> Tools -> NuGet Package Manager -> Package Manager Console 
+3. MenuBar at top -> Tools -> NuGet Package Manager -> Package Manager Console 
 
-1. Open "Package Manager Console" in "Microsoft Visual Studio"
+4. Open "Package Manager Console" in "Microsoft Visual Studio"
 
-1. First command to (makes sure you name the migration in double quotes): 
+5. First command to (makes sure you name the migration in double quotes): 
 
 	- add-migration "Initial_Migration"
 
-1. Second command to run:
+6. Second command to run:
 
     - update-database
 
-1. this will ensure the .mdf database is created for Microsoft SQL Server database in the following directory "C:\Users\[userName]\K2360182_FastBankApp.mdf". It is needed to use the app.
+7. this will ensure the .mdf database is created for Microsoft SQL Server database in the following directory "C:\Users\[userName]\K2360182_FastBankApp.mdf". It is needed to use the app.
 
-1. Please check to see if the database "K2360182_FastBankApp.mdf" has been created successfully.
+8. Please check to see if the database "K2360182_FastBankApp.mdf" has been created successfully.
 ***
 
 # Technologies used in developing the application:
