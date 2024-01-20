@@ -16,6 +16,7 @@
                 Opening Account for <span class="text-capitalize fw-semibold fs-3">@ViewData["CustomerFullName"]</span>
             </div>
             <div class="card-body">
+                <input type="hidden" name="showGoBack" value="@TempData["ShowGoBack"]"></input>
                 <label class="mb-1">Enter your initial deposit: </label>
                 <input class="form-control" name="balance" type="number" value="0" min="0" max="1_000_000_000"/>
                 <p class="mt-2">@Html.ValidationMessage("balanceInvalidMessage")</p>
@@ -24,10 +25,7 @@
 
             <div class="card-footer">
                 <button class="btn btn-primary" type="submit">Submit</button>
-                @if((bool)ViewData["ShowGoBack"]! == true)
-                {
-                    <a class="btn btn-outline-info" asp-action="ManageProfile" asp-controller="Account">Go Back</a>
-                }
+                <a class="btn btn-outline-info @TempData["ShowGoBack"]" asp-action="ManageProfile" asp-controller="Account">Go Back</a>
             </div>
         </div>
     </div>

@@ -25,10 +25,10 @@
     </div>
     <div>
         <a class="btn btn-primary" asp-action="EditProfileDetails" asp-controller="Account">Edit Profile</a>
-        <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId" asp-route-showGoBack="true">Open an Account</a>
+        <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId" asp-route-showGoBack="visible">Open an Account</a>
     </div>
     <div class="pt-2">
-        <h5 class="mt-2">You have the following Accounts: </h5>
+        <h5 class="mt-2 pb-2">You have the following Accounts: </h5>
         @if (Model.Accounts!.Count > 0)
         {
             @foreach (var account in Model.Accounts!)

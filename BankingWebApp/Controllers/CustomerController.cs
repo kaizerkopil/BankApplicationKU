@@ -70,19 +70,23 @@ public class CustomerController : BaseController<CustomerController>
     #region OpenAccount
 
     [HttpGet]
-    public IActionResult OpenAccount(int id, bool showGoBack = false)
+    public IActionResult OpenAccount(int id, string showGoBack = "invisible")
     {
         var customer = _customerRepo.GetById(id);
         _sessionManager.SetUserData(new() { Id = customer.CustomerId, FullName = customer.FullName });
         ViewData.SetData("CustomerFullName", _sessionManager.GetUserData().FullName!);
+
+        TempData["ShowGoBack"] = showGoBack;
+
         ViewData.SetData("ShowGoBack", showGoBack);
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult OpenAccount([Bind("Balance")] Account account, string accountTypeSelected, decimal balance)
+    public IActionResult OpenAccount([Bind("Balance")] Account account, string accountTypeSelected, decimal balance, string showGoBack = "invisible")
     {
+        TempData["ShowGoBack"] = showGoBack;
         var dbCust = _customerRepo.GetCustomersWithAccountsAndTransactions().FirstOrDefault(c => c.CustomerId == _sessionManager.GetUserData().Id);
         ViewData.SetData("CustomerFullName", _sessionManager.GetUserData().FullName!);
 
@@ -123,7 +127,7 @@ public class CustomerController : BaseController<CustomerController>
                 invalidMessage = "You cannot deposit more than £1,000,000,000 billion pounds";
             }
             ModelState.AddModelError("balanceInvalidMessage", invalidMessage);
-
+            ViewData.SetData("ShowGoBack", true);
             return View(account);
         }
     }
