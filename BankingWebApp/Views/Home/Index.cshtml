@@ -25,14 +25,14 @@
     }
 </style>
 
-<div class="container pt-3 mt-2">
-    <div class="alert alert-warning @ViewData["ShowMessage"] alert-dismissible" role="alert">
+<div class="container @ViewData["ShowMessage"] pt-2">
+    <div class="alert alert-@ViewData["AlertType"]  alert-dismissible" role="alert">
         <i class="bi bi-info-circle me-2"></i>@ViewData["ResponseMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert">
         </button>
     </div>
 </div>
-<div class="container row mx-auto mt-2 gap-2 py-2">
+<div class="container row mx-auto gap-2 pt-2 pb-4">
     <h3 class="fw-light">Locate our Branch Locations: </h3>
     <hr>
     <div>

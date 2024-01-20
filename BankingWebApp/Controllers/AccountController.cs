@@ -3,6 +3,7 @@ using BankingWebApp.Models.Bank;
 using BankingWebApp.Settings;
 using BankingWebApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 
@@ -47,7 +48,7 @@ public class AccountController : BaseController<AccountController>
 
         if (getAccount == null)
         {
-            return RedirectToAction("Index", "Home", new { responseMessage = "Error on Showing Transactions: Please open an account with us first", showMessage = "visible" });
+            return RedirectToAction("Index", "Home", new { responseMessage = "Error on Showing Transactions: Please open an account with us first", showMessage = "visible", alertType = "warning" });
         }
 
         var getCustomer = getAccount?.Customer;
@@ -88,7 +89,9 @@ public class AccountController : BaseController<AccountController>
         vm.SelectedAccount = selectedAccount;
         vm.Transactions = AllTransactions;
         vm.AccountTypes = new();
-        foreach (var account in selectedAccount!.Customer!.Accounts!)
+
+        var accountTypesToSelect = allAccounts.Where(a => a.CustomerId == userId);
+        foreach (var account in accountTypesToSelect)
         {
             var accountType = account.AccountType.ToString();
             var selectedItem = new SelectListItem(text: accountType, value: accountType);
@@ -111,7 +114,7 @@ public class AccountController : BaseController<AccountController>
 
         if (getAccount == null)
         {
-            return RedirectToAction("Index", "Home", new { responseMessage = "Error on Manage Funds: Please open an account with us first", showMessage = "visible" });
+            return RedirectToAction("Index", "Home", new { responseMessage = "Error on Manage Funds: Please open an account with us first", showMessage = "visible", alertType = "warning" });
         }
 
         var getCustomer = getAccount?.Customer;
@@ -151,9 +154,12 @@ public class AccountController : BaseController<AccountController>
         var selectedAccount = allAccounts.FirstOrDefault(a => a.CustomerId == userId && a.AccountType.ToString() == accountTypeSelected);
 
         AccountViewModel vm = new();
+        vm.Customer = selectedAccount.Customer;
         vm.SelectedAccount = selectedAccount;
         vm.AccountTypes = new();
-        foreach (var account in selectedAccount!.Customer!.Accounts!)
+
+        var accountTypesToSelect = allAccounts.Where(a => a.CustomerId == userId);
+        foreach (var account in accountTypesToSelect)
         {
             var accountType = account.AccountType.ToString();
             var selectedItem = new SelectListItem(text: accountType, value: accountType);
@@ -265,6 +271,40 @@ public class AccountController : BaseController<AccountController>
         }
     }
 
+    public IActionResult MoveFundsToDebitAccount(int customerId, decimal transferAmount, string accountType)
+    {
+        var userId = _sessionManager.GetUserData().Id;
+        string responseMessage = "";
+
+        var allAccounts = _accountRepo.GetAccountsWithCustomersAndTransactions().Where(a => a.CustomerId == customerId);
+
+        var getSavingsAccount = allAccounts.FirstOrDefault(a => a.AccountType == AccountTypeEnum.Savings);
+        var getDebitAccount = allAccounts.FirstOrDefault(a => a.AccountType == AccountTypeEnum.Debit);
+
+        if (getDebitAccount == null)
+        {
+            responseMessage = "You do not have a debit account with us. Please open one from \"Manage Profile\"";
+            return RedirectToAction(nameof(ManageFunds), new { accountSelected = true, selectedAccountType = accountType, responseMessage = responseMessage, showMessage = "visible", alertType = "danger" });
+        } else
+        {
+            if (transferAmount <= 0)
+            {
+                responseMessage = "The transfer amount cannot be less than or equal to zero";
+                return RedirectToAction(nameof(ManageFunds), new { accountSelected = true, selectedAccountType = accountType, responseMessage = responseMessage, showMessage = "visible", alertType = "danger" });
+            } else if (transferAmount > getSavingsAccount!.Balance)
+            {
+                responseMessage = "The transfer amount exceeds your available balance";
+                return RedirectToAction(nameof(ManageFunds), new { accountSelected = true, selectedAccountType = accountType, responseMessage = responseMessage, showMessage = "visible", alertType = "danger" });
+            }
+
+            var depositTransaction = getSavingsAccount!.TransferMoney(getDebitAccount, transferAmount);
+            _transactionRepo.Insert(depositTransaction);
+            _transactionRepo.Save();
+
+            responseMessage = "Your funds have been successfully transferred to your debit Account";
+            return RedirectToAction(nameof(ManageFunds), new { accountSelected = true, selectedAccountType = accountType, responseMessage = responseMessage, showMessage = "visible", alertType = "success" });
+        }
+    }
 
     [HttpGet]
     public IActionResult ManageProfile(string responseMessage, string alertType, string showMessage = "invisible")
@@ -290,6 +330,49 @@ public class AccountController : BaseController<AccountController>
     {
         ViewData.SetData("ShowMessage", "invisible");
         return View();
+    }
+
+    [HttpGet]
+    public IActionResult EditProfileDetails()
+    {
+        var userId = _sessionManager.GetUserData().Id;
+
+        var dbCust = _customerRepo.GetById(userId);
+
+        CustomerViewModel vm = new();
+        vm.Customer = dbCust;
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    public IActionResult EditProfileDetails(Customer customer)
+    {
+        string responseMessage = "";
+
+        if (ModelState.IsValid)
+        {
+
+            _customerRepo.Update(customer);
+            _customerRepo.Save();
+            responseMessage = "Your personal details have been successfully changed.";
+            return RedirectToAction(nameof(ManageProfile), new { responseMessage = responseMessage, showMessage = "visible", alertType = "success" });
+        } else
+        {
+            List<string> invalidPropNames = new();
+
+            foreach (var modelStateEntry in ModelState)
+            {
+                if (modelStateEntry.Value.ValidationState == ModelValidationState.Invalid)
+                    invalidPropNames.Add(modelStateEntry.Key.Replace("customer.", ""));
+            }
+
+            CustomerViewModel vm = new();
+            vm.InvalidPropNames = invalidPropNames;
+            vm.Customer = customer;
+            vm.Customer.RegistrationDate = DateTime.Now;
+            return View(vm);
+        }
     }
 
     [HttpGet]
@@ -322,9 +405,6 @@ public class AccountController : BaseController<AccountController>
         }
     }
 
-    //[HttpPost]
-    //public IActionResult DeleteAccount(int accountId)
-    //{
-    //    return RedirectToAction(nameof(ManageProfile));
-    //}
+
+
 }

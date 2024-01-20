@@ -30,7 +30,6 @@ public class CustomerController : BaseController<CustomerController>
     [ValidateAntiForgeryToken]
     public IActionResult RegisterCustomer([Bind("FirstName", "LastName", "EmailAddress", "Password", "ConfirmPassword", "Phonenum", "StreetAddress", "PostCode", "City")] Customer customer)
     {
-        var x = customer;
         if (!ModelState.IsValid)
         {
             List<string> invalidPropNames = new();
@@ -112,7 +111,7 @@ public class CustomerController : BaseController<CustomerController>
             //account.CustomerId = dbCust.CustomerId;
             _accountRepo.Insert(account);
             _accountRepo.Save();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { responseMessage = "Your account has been successfully created", showMessage = "visible", alertType = "success" });
         } else
         {
             if (account.Balance < 0)

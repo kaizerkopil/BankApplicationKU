@@ -24,17 +24,19 @@
         </div>
     </div>
     <div>
+        <a class="btn btn-primary" asp-action="EditProfileDetails" asp-controller="Account">Edit Profile</a>
         <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId">Open an Account</a>
     </div>
     <div class="pt-2">
         <h5 class="mt-2">You have the following Accounts: </h5>
-        @if(Model.Accounts!.Count > 0){
-            @foreach(var account in Model.Accounts!)
+        @if (Model.Accounts!.Count > 0)
+        {
+            @foreach (var account in Model.Accounts!)
             {
                 <div class="d-inline-block border border-1 p-3 gap-1 mx-auto">
                     <p><span class="fw-semibold">Account Type: </span><span>@account.AccountType</span></p>
                     <p><span class="fw-semibold">Account No: </span><span>@account.AccountNo</span></p>
-                    <p><span class="fw-semibold">Current Balance: </span><span>£@account.Balance</span></p>
+                    <p><span class="fw-semibold">Current Balance: </span><span>@(string.Format("{0:C2}", account.Balance))</span></p>
                     <a class="btn btn-danger d-inline-block" asp-action="DeleteAccount" asp-route-accountId="@account.AccountId">
                         Delete Account
                     </a>
@@ -46,10 +48,13 @@
                 <p>You do not have any account opened with us</p>
             </div>
         }
-        <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"] alert-dismissible" role="alert">
+        <div class="pt-3">
+            <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"] alert-dismissible" role="alert">
                 <i class="bi bi-info-circle me-2"></i>@ViewData["ResponseMessage"]
                 <button type="button" class="btn-close" data-bs-dismiss="alert">
                 </button>
             </div>
+        </div>
+
     </div>
 </div>

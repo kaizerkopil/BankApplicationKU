@@ -24,7 +24,7 @@
             <hr class="mt-1 mb-2">
             <div><span class="fs-6 fw-light">Account No:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountNo</span></div>
             <div><span class="fs-6 fw-light">Account Holder:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Customer!.FullName</span></div>
-            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">£@Model.SelectedAccount.Balance</span></div>
+            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">@(string.Format("{0:C2}", Model.SelectedAccount.Balance))</span></div>
             <div><span class="fs-6 fw-light">Account Type:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountType</span></div>
         </div>
         @if (Model.SelectedAccount.AccountType == AccountTypeEnum.Savings)
@@ -32,6 +32,7 @@
             <div class="d-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#withdrawFundDetails" asp-action="WithdrawMoney">Withdraw Funds</button>
+                <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#moveFundsToDebitAccount" asp-action="MoveFundsToDebitAccount">Move funds To Debit Account</button>
             </div>
         } else if (Model.SelectedAccount.AccountType == AccountTypeEnum.Debit)
         {
@@ -75,6 +76,28 @@
                     <div class="input-group">
                         <label class="col-12 col-xl-3 form-label">Withdraw Amount: </label>
                         <input class="form-control rounded-start-2" type="number" min="0" max="1_000_000_000" name="withdrawAmount">
+                    </div>
+                    <div class="d-inline-block mx-auto ms-lg-0">
+                        <button class="btn btn-success mt-3 mx-auto"
+                                type="submit">
+                            Confirm Transfer
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="collapse ms-lg-2 ps-0" id="moveFundsToDebitAccount">
+            @using (Html.BeginForm("MoveFundsToDebitAccount", "Account"))
+            {
+                <div class="card card-body mt-4 gap-2">
+                    <label class="col-12 col-xl-5 fs-5 fw-bold">Moving funds to Debit Account</label>
+                    <hr class="mt-0 mb-1">
+                    <input type="hidden" value="@Model.SelectedAccount.AccountType.ToString()" name="accountType" />
+                    <input type="hidden" value="@Model.Customer!.CustomerId" name="customerId" />
+
+                    <div class="input-group">
+                        <label class="col-12 col-xl-3 form-label">Deposit Amount: </label>
+                        <input class="form-control rounded-start-2" type="number" min="0" max="1_000_000_000" name="transferAmount">
                     </div>
                     <div class="d-inline-block mx-auto ms-lg-0">
                         <button class="btn btn-success mt-3 mx-auto"

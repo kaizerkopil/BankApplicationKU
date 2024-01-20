@@ -18,7 +18,7 @@ public class HomeController : BaseController<HomeController>
 
     #region HomePage
     [HttpGet]
-    public IActionResult Index(int id, string responseMessage, string showMessage = "invisible")
+    public IActionResult Index(int id, string responseMessage, string alertType, string showMessage = "invisible")
     {
         if (id != 0)
         {
@@ -36,6 +36,7 @@ public class HomeController : BaseController<HomeController>
         //setting Customer FullName to footer anchor tag element innerText
         ViewData.SetData("CustomerFullName", userFullName!);
 
+        ViewData.SetData("AlertType", alertType);
         ViewData.SetData("ShowMessage", showMessage);
         ViewData.SetData("ResponseMessage", responseMessage);
 

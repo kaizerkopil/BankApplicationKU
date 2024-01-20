@@ -1,13 +1,10 @@
 ﻿@model CustomerViewModel
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
-
-    ViewData["Title"] = "Register Customer";
+    ViewData["Title"] = "Edit Profile Details";
 }
 
-@using (Html.BeginForm("RegisterCustomer", "Customer", FormMethod.Post))
+
+@using (Html.BeginForm("EditProfileDetails", "Account", FormMethod.Post))
 {
     <div class="container mt-5 pt-lg-4">
         <div class="card">
@@ -15,10 +12,11 @@
                 <p class="fs-2 fw-light">Registration Form</p>
             </div>
             <div class="card-body row gap-3">
+                <input type="hidden" value="@Model.Customer!.CustomerId" asp-for="@Model.Customer.CustomerId">
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.FirstName) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.FirstName, new { @class = "form-control", @type = "text" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.FirstName, new { @class = "form-control", @type = "text", @value = Model.Customer!.FirstName })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("FirstName"))
                     {
@@ -32,35 +30,35 @@
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.LastName) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.LastName, new { @class = "form-control", @type = "text" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.LastName, new { @class = "form-control", @type = "text", @value = Model.Customer!.LastName })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("LastName"))
                     {
                         <div class="row mt-1">
-                        <div class="d-none d-lg-block col-lg-3"></div>
+                            <div class="d-none d-lg-block col-lg-3"></div>
                             <div class="col-12 col-lg-6"><i class="bi bi-exclamation-circle me-2"></i>@Html.ValidationMessageFor(m => m.Customer!.LastName)</div>
-                    </div>
+                        </div>
                     }
                 </div>
 
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.EmailAddress) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.EmailAddress, new { @class = "form-control", @type = "email" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.EmailAddress, new { @class = "form-control", @type = "email", @value = Model.Customer!.EmailAddress })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("EmailAddress"))
                     {
-                    <div class="row mt-1">
-                        <div class="d-none d-lg-block col-lg-3"></div>
-                        <div class="col-12 col-lg-6"><i class="bi bi-exclamation-circle me-2"></i>@Html.ValidationMessageFor(m => m.Customer!.EmailAddress)</div>
-                    </div>
+                        <div class="row mt-1">
+                            <div class="d-none d-lg-block col-lg-3"></div>
+                            <div class="col-12 col-lg-6"><i class="bi bi-exclamation-circle me-2"></i>@Html.ValidationMessageFor(m => m.Customer!.EmailAddress)</div>
+                        </div>
                     }
                 </div>
 
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.Password) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.Password, new { @class = "form-control", @type = "password" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.Password, new { @class = "form-control", @type = "password", @value = Model.Customer!.Password })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("Password"))
                     {
@@ -74,7 +72,7 @@
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.ConfirmPassword) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.ConfirmPassword, new { @class = "form-control", @type = "password" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.ConfirmPassword, new { @class = "form-control", @type = "password"})</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("ConfirmPassword"))
                     {
@@ -88,7 +86,7 @@
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.StreetAddress) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.StreetAddress, new { @class = "form-control", @type = "text" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.StreetAddress, new { @class = "form-control", @type = "text", @value = Model.Customer!.StreetAddress })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("StreetAddress"))
                     {
@@ -102,7 +100,7 @@
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.City) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.City, new { @class = "form-control", @type = "text" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.City, new { @class = "form-control", @type = "text", @value = Model.Customer!.City })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("City"))
                     {
@@ -116,7 +114,7 @@
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.PostCode) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.PostCode, new { @class = "form-control", @type = "text" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.PostCode, new { @class = "form-control", @type = "text", @value = Model.Customer!.PostCode })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("PostCode"))
                     {
@@ -130,7 +128,7 @@
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.Phonenum) </div>
-                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.Phonenum, new { @class = "form-control", @type = "text" })</div>
+                        <div class="col-12 col-lg-6">@Html.TextBoxFor(m => m.Customer!.Phonenum, new { @class = "form-control", @type = "text", @value = Model.Customer!.Phonenum })</div>
                     </div>
                     @if (@Model.InvalidPropNames!.Contains("Phonenum"))
                     {

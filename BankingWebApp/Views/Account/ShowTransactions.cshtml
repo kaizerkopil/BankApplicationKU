@@ -26,7 +26,7 @@
             <hr class="mt-1 mb-2">
             <div><span class="fs-6 fw-light">Account No:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountNo</span></div>
             <div><span class="fs-6 fw-light">Account Holder:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.Customer!.FullName</span></div>
-            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">£@Model.SelectedAccount.Balance</span></div>
+            <div><span class="fs-6 fw-light">Balance:</span><span class="fs-6 fw-bold ps-2">@(string.Format("{0:C2}", Model.SelectedAccount.Balance))</span></div>
             <div><span class="fs-6 fw-light">Account Type:</span><span class="fs-6 fw-bold ps-2">@Model.SelectedAccount.AccountType</span></div>
         </div>
         <div class="container py-2 ps-0 ms-lg-2  w-100">
@@ -51,7 +51,7 @@
                                 <td>@transaction.TransactionDate</td>
                                 @if (transaction.Receiver == null && transaction.Sender?.AccountId == @Model.SelectedAccount.AccountId)
                                 {
-                                    <td>-@transaction.Amount</td>
+                                    <td>@string.Format("-{0:C2}", transaction.Amount)</td>
                                     <td></td>
                                     <td>
                                         <div class="d-flex flex-column">
@@ -65,7 +65,7 @@
                                     </td>
                                 }else if(transaction.Sender == null && transaction.Receiver?.AccountId == @Model.SelectedAccount.AccountId)
                                 {
-                                    <td>+@transaction.Amount</td>
+                                    <td>@string.Format("+{0:C2}", transaction.Amount)</td>
                                     <td>
                                         <div class="d-flex flex-column">
                                             <span>@transaction.Receiver?.Customer!.FullName</span>
@@ -79,7 +79,7 @@
                                     <td></td>
                                 }else if (transaction.Sender != null && transaction.Sender?.AccountId == Model.SelectedAccount.AccountId)
                                 {
-                                    <td>-@transaction.Amount</td>
+                                    <td>@string.Format("-{0:C2}", transaction.Amount)</td>
                                     <td></td>
                                     <td>
                                         <div class="d-flex flex-column">
@@ -89,7 +89,7 @@
                                     </td>
                                 } else if (transaction.Receiver is not null && transaction.Receiver?.AccountId == Model.SelectedAccount.AccountId)
                                 {
-                                    <td>+@transaction.Amount</td>
+                                    <td>@string.Format("+{0:C2}", transaction.Amount)</td>
                                     <td>
                                         <div class="d-flex flex-column">
                                             <span>@transaction.Sender?.Customer!.FullName</span>
