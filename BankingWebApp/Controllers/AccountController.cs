@@ -133,6 +133,10 @@ public class AccountController : BaseController<AccountController>
         {
             var accountType = account.AccountType.ToString();
             var selectedItem = new SelectListItem(text: accountType, value: accountType);
+            if (selectedItem.Text == selectedAccountType)
+            {
+                selectedItem.Selected = true;
+            }
             vm.AccountTypes.Add(selectedItem);
         }
         ViewData.SetData("CustomerFullName", vm.Customer!.FullName);
