@@ -37,9 +37,34 @@
                     <p><span class="fw-semibold">Account Type: </span><span>@account.AccountType</span></p>
                     <p><span class="fw-semibold">Account No: </span><span>@account.AccountNo</span></p>
                     <p><span class="fw-semibold">Current Balance: </span><span>@(string.Format("{0:C2}", account.Balance))</span></p>
-                    <a class="btn btn-danger d-inline-block" asp-action="DeleteAccount" asp-route-accountId="@account.AccountId">
+                    <!--#region ModalButton-->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Delete Account
-                    </a>
+                    </button>
+                    <!--#endregion ModalButton -->
+
+                    <!--#region Modal Dialog -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure about deleting this account?</p>
+                                    <p class="my-auto"><span class="text-danger"><i class="bi bi-exclamation-octagon me-1"></i>Warning</span>: Please make sure you withdraw all your funds before deleting your account!</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-danger d-inline-block" asp-action="DeleteAccount" asp-route-accountId="@account.AccountId">
+                                        Confirm Deletion
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--#endregion Modal Dialog -->
                 </div>
             }
         } else
