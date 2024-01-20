@@ -12,7 +12,7 @@
         <p><b>First Name:</b> <span>@Model.Customer.FirstName</span></p>
         <p><b>Last Name:</b> <span>@Model.Customer.LastName</span></p>
         <p><b>Email:</b> <span>@Model.Customer.EmailAddress</span></p>
-        <p><b>Password:</b> <span>@Model.Customer.Password</span></p>
+        <p><b>Password:</b> <span>@Html.TextBoxFor(m => m.Customer!.Password, new { @class = "passwordInputReadonly", @type = "password", value = Model.Customer.Password, @readonly="readonly"})</span></p>
         <p><b>Phone number:</b> <span>@Model.Customer.Phonenum</span></p>
         <p><b>Date registered:</b> <span>@Model.Customer.RegistrationDate</span></p>
         <div>
@@ -25,7 +25,7 @@
     </div>
     <div>
         <a class="btn btn-primary" asp-action="EditProfileDetails" asp-controller="Account">Edit Profile</a>
-        <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId">Open an Account</a>
+        <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId" asp-route-showGoBack="true">Open an Account</a>
     </div>
     <div class="pt-2">
         <h5 class="mt-2">You have the following Accounts: </h5>

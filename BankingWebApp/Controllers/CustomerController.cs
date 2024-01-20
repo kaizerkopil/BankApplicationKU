@@ -43,7 +43,6 @@ public class CustomerController : BaseController<CustomerController>
             CustomerViewModel vm = new();
             vm.InvalidPropNames = invalidPropNames;
             vm.Customer = customer;
-            vm.Customer.RegistrationDate = DateTime.Now;
             return View(vm);
         }
 
@@ -58,6 +57,7 @@ public class CustomerController : BaseController<CustomerController>
             return View(vm);
         } else
         {
+            customer.RegistrationDate = DateTime.Now;
             _logger.LogInformation($"Email not found. So, registering customer with email: {customer.EmailAddress}");
             _customerRepo.Insert(customer);
             _customerRepo.Save();
@@ -70,11 +70,12 @@ public class CustomerController : BaseController<CustomerController>
     #region OpenAccount
 
     [HttpGet]
-    public IActionResult OpenAccount(int id)
+    public IActionResult OpenAccount(int id, bool showGoBack = false)
     {
         var customer = _customerRepo.GetById(id);
         _sessionManager.SetUserData(new() { Id = customer.CustomerId, FullName = customer.FullName });
         ViewData.SetData("CustomerFullName", _sessionManager.GetUserData().FullName!);
+        ViewData.SetData("ShowGoBack", showGoBack);
         return View();
     }
 

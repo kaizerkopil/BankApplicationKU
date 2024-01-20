@@ -24,6 +24,10 @@
 
             <div class="card-footer">
                 <button class="btn btn-primary" type="submit">Submit</button>
+                @if((bool)ViewData["ShowGoBack"]! == true)
+                {
+                    <a class="btn btn-outline-info" asp-action="ManageProfile" asp-controller="Account">Go Back</a>
+                }
             </div>
         </div>
     </div>

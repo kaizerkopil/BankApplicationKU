@@ -15,12 +15,11 @@ html {
 }
 
 html {
-
 }
 
 body {
-    overflow-x:hidden;
-    overflow-y:scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 #renderBody {
@@ -49,6 +48,11 @@ body {
 
 .navbar a {
     text-decoration: none;
+}
+
+.passwordInputReadonly {
+    outline: none;
+    border: none;
 }
 
 /* This is to make the input focus in form-floating align correcting with the label*/

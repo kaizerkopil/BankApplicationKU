@@ -4,6 +4,7 @@ using BankingWebApp.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingWebApp.Migrations
 {
     [DbContext(typeof(BankAppDbContext))]
-    partial class BankAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240120041127_updated_SeedData_for_Customer_Model")]
+    partial class updated_SeedData_for_Customer_Model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,10 +142,10 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "john.gerrad@gmail.com",
                             FirstName = "John",
                             LastName = "Gerrad",
-                            Password = "11111",
+                            Password = "1111",
                             Phonenum = "07705089501",
                             PostCode = "T123 555",
-                            RegistrationDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6377),
+                            RegistrationDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(2876),
                             StreetAddress = "John 123 G"
                         },
                         new
@@ -152,10 +155,10 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "pattrick.george@outlook.com",
                             FirstName = "Pattrick",
                             LastName = "George",
-                            Password = "22222",
+                            Password = "2222",
                             Phonenum = "07755589511",
                             PostCode = "NZ12 X55",
-                            RegistrationDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6451),
+                            RegistrationDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(2947),
                             StreetAddress = "Pattrick 456 G"
                         },
                         new
@@ -165,10 +168,10 @@ namespace BankingWebApp.Migrations
                             EmailAddress = "lilliana.bestie@hotmail.com",
                             FirstName = "Lilliana",
                             LastName = "Johnson",
-                            Password = "33333",
+                            Password = "3333",
                             Phonenum = "07712312355",
                             PostCode = "CL5 53X",
-                            RegistrationDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6454),
+                            RegistrationDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(2951),
                             StreetAddress = "Lilliana 789 X"
                         });
                 });
@@ -212,7 +215,7 @@ namespace BankingWebApp.Migrations
                             Amount = 1000m,
                             ReceiverAccountId = 2,
                             SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6676)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3189)
                         },
                         new
                         {
@@ -220,7 +223,7 @@ namespace BankingWebApp.Migrations
                             Amount = 3000m,
                             ReceiverAccountId = 2,
                             SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6689)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3198)
                         },
                         new
                         {
@@ -228,7 +231,7 @@ namespace BankingWebApp.Migrations
                             Amount = 5000m,
                             ReceiverAccountId = 3,
                             SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6692)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3200)
                         },
                         new
                         {
@@ -236,7 +239,7 @@ namespace BankingWebApp.Migrations
                             Amount = 6000m,
                             ReceiverAccountId = 4,
                             SenderAccountId = 1,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6694)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3202)
                         },
                         new
                         {
@@ -244,7 +247,7 @@ namespace BankingWebApp.Migrations
                             Amount = 2000m,
                             ReceiverAccountId = 3,
                             SenderAccountId = 4,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6696)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3204)
                         },
                         new
                         {
@@ -252,7 +255,7 @@ namespace BankingWebApp.Migrations
                             Amount = 1500m,
                             ReceiverAccountId = 2,
                             SenderAccountId = 4,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6698)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3206)
                         },
                         new
                         {
@@ -260,7 +263,7 @@ namespace BankingWebApp.Migrations
                             Amount = 5000m,
                             ReceiverAccountId = 1,
                             SenderAccountId = 4,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6700)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3208)
                         },
                         new
                         {
@@ -268,7 +271,7 @@ namespace BankingWebApp.Migrations
                             Amount = 6000m,
                             ReceiverAccountId = 1,
                             SenderAccountId = 2,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6702)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3210)
                         },
                         new
                         {
@@ -276,7 +279,7 @@ namespace BankingWebApp.Migrations
                             Amount = 15000m,
                             ReceiverAccountId = 3,
                             SenderAccountId = 2,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6703)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3212)
                         },
                         new
                         {
@@ -284,7 +287,7 @@ namespace BankingWebApp.Migrations
                             Amount = 3000m,
                             ReceiverAccountId = 4,
                             SenderAccountId = 2,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6705)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3214)
                         },
                         new
                         {
@@ -292,7 +295,7 @@ namespace BankingWebApp.Migrations
                             Amount = 5000m,
                             ReceiverAccountId = 1,
                             SenderAccountId = 3,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6707)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3216)
                         },
                         new
                         {
@@ -300,7 +303,7 @@ namespace BankingWebApp.Migrations
                             Amount = 8000m,
                             ReceiverAccountId = 2,
                             SenderAccountId = 3,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6709)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3218)
                         },
                         new
                         {
@@ -308,7 +311,7 @@ namespace BankingWebApp.Migrations
                             Amount = 15000m,
                             ReceiverAccountId = 1,
                             SenderAccountId = 3,
-                            TransactionDate = new DateTime(2024, 1, 20, 4, 38, 33, 10, DateTimeKind.Local).AddTicks(6711)
+                            TransactionDate = new DateTime(2024, 1, 20, 4, 11, 26, 920, DateTimeKind.Local).AddTicks(3220)
                         });
                 });
 

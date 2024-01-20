@@ -21,19 +21,28 @@ public class Customer
 
     [Display(Name = "Password")]
     [Required(ErrorMessage = "Password cannot be empty")]
+    [MinLength(5, ErrorMessage = "Password needs to be minimum of 5 characters")]
     [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? Password { get; set; }
 
     [Display(Name = "Phone number")]
+    [Required(ErrorMessage = "Phone number cannot be empty")]
+    [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? Phonenum { get; set; }
 
     [Display(Name = "Street Address")]
+    [Required(ErrorMessage = "Street Address cannot be empty")]
+    [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? StreetAddress { get; set; }
 
     [Display(Name = "Postcode")]
+    [Required(ErrorMessage = "Postcode cannot be empty")]
+    [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? PostCode { get; set; }
 
     [Display(Name = "City")]
+    [Required(ErrorMessage = "City cannot be empty")]
+    [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? City { get; set; }
 
     [Display(Name = "Date Registered")]
@@ -42,7 +51,7 @@ public class Customer
     public List<Account>? Accounts { get; set; } = new();
 
     [NotMapped]
-    [Compare(nameof(Password), ErrorMessage = "The passwords both needs to match")]
+    [Compare(nameof(Password), ErrorMessage = "Both passwords needs to be same")]
     [Required(ErrorMessage = "Confirm Password cannot be empty")]
     [MaxLength(50, ErrorMessage = "Password cannot exceed 50 characters")]
     public string? ConfirmPassword { get; set; }

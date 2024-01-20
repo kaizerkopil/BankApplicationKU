@@ -9,10 +9,11 @@
     <div class="container mt-5 pt-lg-4">
         <div class="card">
             <div class="card-header bg-transparent">
-                <p class="fs-2 fw-light">Registration Form</p>
+                <p class="fs-2 fw-light">Edit Profile</p>
             </div>
             <div class="card-body row gap-3">
                 <input type="hidden" value="@Model.Customer!.CustomerId" asp-for="@Model.Customer.CustomerId">
+                <input type="hidden" value="@Model.Customer!.RegistrationDate" asp-for="@Model.Customer.RegistrationDate" />
                 <div class="row mx-auto">
                     <div class="row gap-1 gap-lg-0">
                         <div class="col-12 col-lg-3">@Html.DisplayNameFor(m => m.Customer!.FirstName) </div>
@@ -141,6 +142,7 @@
             </div>
             <div class="card-footer bg-transparent py-3">
                 <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-outline-info" asp-action="ManageProfile" asp-controller="Account">Go Back</a>
             </div>
         </div>
     </div>
