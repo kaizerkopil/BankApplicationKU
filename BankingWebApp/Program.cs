@@ -53,6 +53,17 @@ app.MapControllerRoute(
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
+var pass = "abc123";
+var salt = PasswordEncrypter.GenerateSaltForPassword();
+var hashedPass = PasswordEncrypter.HashPasswordWithSalt(pass, salt);
+
+var wrongPass = PasswordEncrypter.VerifyPassword("abc12", salt, hashedPass);
+var rightPass = PasswordEncrypter.VerifyPassword(pass, salt, hashedPass);
+Console.WriteLine($"wrongPass: {wrongPass}");
+Console.WriteLine($"rightPass: {rightPass}");
+
+var b = 10;
+
 try
 {
     logger.Debug("init main");

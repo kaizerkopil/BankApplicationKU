@@ -64,6 +64,19 @@ namespace BankingWebApp.Services
             }
         }
 
+        /// <summary>
+        /// Verify user entered password with the hashed version by converting the pass and storedSalt to hash again
+        /// </summary>
+        /// <param name="enteredPassword">User Password</param>
+        /// <param name="storedSalt">Salt value stored in database</param>
+        /// <param name="storedHash">HashedPassword stored in database</param>
+        /// <returns>True: if password entered is correct</returns>
+        public static bool VerifyPassword(string enteredPassword, string storedSalt, string storedHash)
+        {
+            var computeHashToString = HashPasswordWithSalt(enteredPassword, storedSalt);
+
+            return storedHash == computeHashToString;
+        }
 
         /* 
          * Notes to be taken when using different Encoding types: UTF8, UTF32, Unicode, BigEndianUnicode, ASCII, Latin1
