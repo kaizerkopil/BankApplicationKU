@@ -1,10 +1,3 @@
-/* 
- * Author: Kopil Kaiser
- * Student Id: K2360182
- * Module Code: 
- * Module Title: Software Architecture and Programming Models
- */
-
 using NLog;
 using NLog.Web;
 
@@ -57,7 +50,6 @@ try
 {
     logger.Debug("init main");
     app.Run();
-
 } catch (Exception exception)
 {
     //NLog: catch setup errors
@@ -67,5 +59,4 @@ try
 {
     // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
     NLog.LogManager.Shutdown();
-
 }
