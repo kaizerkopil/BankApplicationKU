@@ -1,7 +1,7 @@
 html {
-    font-size: 14px;
-    scroll-behavior: smooth;
-}
+    font-size: 18px;
+/*    scroll-behavior: smooth;
+*/}
 
 @media (min-width: 768px) {
     html {
@@ -14,20 +14,19 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-}
 
 body {
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #renderBody {
     width: 100vw;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 #sideBarDiv {
+    width: 300px;
     height: 100vh;
     overflow-y: hidden;
 }

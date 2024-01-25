@@ -69,6 +69,3 @@ try
     NLog.LogManager.Shutdown();
 
 }
-
-
-

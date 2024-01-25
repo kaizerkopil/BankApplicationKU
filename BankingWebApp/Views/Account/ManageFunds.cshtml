@@ -29,20 +29,20 @@
         </div>
         @if (Model.SelectedAccount.AccountType == AccountTypeEnum.Savings)
         {
-            <div class="d-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
+            <div class="d-flex container gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#withdrawFundDetails" asp-action="WithdrawMoney">Withdraw Funds</button>
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#moveFundsToDebitAccount" asp-action="MoveFundsToDebitAccount">Move funds To Debit Account</button>
             </div>
         } else if (Model.SelectedAccount.AccountType == AccountTypeEnum.Debit)
         {
-            <div class="d-flex gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
+            <div class="d-flex container gap-2 mt-4 ms-lg-2 ps-0 justify-content-center justify-content-lg-start">
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#depositFundDetails" asp-action="DeposityMoney">Deposit Funds</button>
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#withdrawFundDetails" asp-action="WithdrawMoney">Withdraw Funds</button>
                 <button class="btn btn-outline-info fw-bold text-black" data-bs-toggle="collapse" data-bs-target="#transferFundDetails" asp-action="TransferMoney">Transfer Funds</button>  
             </div>
         }
-        <div class="collapse ms-lg-2 ps-0" id="depositFundDetails">
+        <div class="container mx-auto collapse ms-lg-2 ps-0" id="depositFundDetails">
             @using (Html.BeginForm("DepositMoney", "Account"))
             {
                 <div class="card card-body mt-4 gap-2">
@@ -64,7 +64,7 @@
                 </div>
             }
         </div>
-        <div class="collapse ms-lg-2 ps-0" id="withdrawFundDetails">
+        <div class="container mx-auto collapse ms-lg-2 ps-0" id="withdrawFundDetails">
             @using (Html.BeginForm("WithdrawMoney", "Account"))
             {
                 <div class="card card-body mt-4 gap-2">
@@ -86,7 +86,7 @@
                 </div>
             }
         </div>
-        <div class="collapse ms-lg-2 ps-0" id="moveFundsToDebitAccount">
+        <div class="container collapse mx-auto ms-lg-2 ps-0" id="moveFundsToDebitAccount">
             @using (Html.BeginForm("MoveFundsToDebitAccount", "Account"))
             {
                 <div class="card card-body mt-4 gap-2">
@@ -108,7 +108,7 @@
                 </div>
             }
         </div>
-        <div class="collapse ms-lg-2 ps-0" id="transferFundDetails">
+        <div class="container mx-auto collapse ms-lg-2 ps-0" id="transferFundDetails">
             @using (Html.BeginForm("TransferMoney", "Account"))
             {
                 <div class="card card-body mt-4 gap-2">
@@ -141,7 +141,7 @@
                 </div>
             }
         </div>
-        <div class="ms-lg-2 ps-0 mt-3">
+        <div class="container mx-auto ms-lg-2 ps-0 mt-3">
             <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"] alert-dismissible" role="alert">
                 <i class="bi bi-info-circle me-2"></i>@ViewData["ResponseMessage"]
                 <button type="button" class="btn-close" data-bs-dismiss="alert">

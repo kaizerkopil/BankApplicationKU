@@ -14,26 +14,28 @@
         <p><b>Email:</b> <span>@Model.Customer.EmailAddress</span></p>
         <p><b>Password:</b> <span>@Html.TextBoxFor(m => m.Customer!.Password, new { @class = "passwordInputReadonly", @type = "password", value = Model.Customer.Password, @readonly="readonly"})</span></p>
         <p><b>Phone number:</b> <span>@Model.Customer.Phonenum</span></p>
-        <p><b>Date registered:</b> <span>@Model.Customer.RegistrationDate</span></p>
+        <p class="mb-2"><b>Date registered:</b> <span>@Model.Customer.RegistrationDate</span></p>
         <div>
-            <span class="fs-5 fw-light">Address Details: </span>
-            <hr class="mt-2">
+            <span class="fw-light">Address Details: </span>
+            <hr class="mt-2 mb-2">
             <p><b>Street Address:</b> <span>@Model.Customer.StreetAddress</span></p>
             <p><b>City:</b> <span>@Model.Customer.City</span></p>
-            <p><b>Post code:</b> <span>@Model.Customer.PostCode</span></p>
+            <p class="mb-2"><b>Post code:</b> <span>@Model.Customer.PostCode</span></p>
         </div>
     </div>
     <div>
         <a class="btn btn-primary" asp-action="EditProfileDetails" asp-controller="Account">Edit Profile</a>
         <a class="btn btn-primary" asp-action="OpenAccount" asp-controller="Customer" asp-route-id="@Model.Customer.CustomerId" asp-route-showGoBack="visible">Open an Account</a>
     </div>
-    <div class="pt-2">
-        <h5 class="mt-2 pb-2">You have the following Accounts: </h5>
+    <div class="mt-4">
+        <h5 class="">You have the following Accounts: </h5>
+        <hr class="mb-3 mt-1"/>
+        <div class="d-flex flex-wrap justify-content-start gap-2">
         @if (Model.Accounts!.Count > 0)
         {
             @foreach (var account in Model.Accounts!)
             {
-                <div class="d-inline-block border border-1 p-3 gap-1 mx-auto">
+                <div class="d-inline-block border border-1 rounded-2 p-3">
                     <p><span class="fw-semibold">Account Type: </span><span>@account.AccountType</span></p>
                     <p><span class="fw-semibold">Account No: </span><span>@account.AccountNo</span></p>
                     <p><span class="fw-semibold">Current Balance: </span><span>@(string.Format("{0:C2}", account.Balance))</span></p>
@@ -69,10 +71,11 @@
             }
         } else
         {
-            <div>
-                <p>You do not have any account opened with us</p>
+            <div style="margin: -0.5rem 0 0 0">
+                You do not have any account opened with us
             </div>
         }
+        </div>
         <div class="pt-3">
             <div class="alert alert-@ViewData["AlertType"] @ViewData["ShowMessage"] alert-dismissible" role="alert">
                 <i class="bi bi-info-circle me-2"></i>@ViewData["ResponseMessage"]
